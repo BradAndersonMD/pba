@@ -1,0 +1,291 @@
+|j|☆PlatyPunkBean
+|j|☆PBAPoliwraths
+|t:|1740939672
+|gametype|singles
+|player|p1|PlatyPunkBean|barry|
+|player|p2|PBAPoliwraths|baker|
+|teamsize|p1|6
+|teamsize|p2|6
+|gen|3
+|tier|[Gen 3] OU
+|rule|Sleep Clause Mod: Limit one foe put to sleep
+|rule|Switch Priority Clause Mod: Faster Pokémon switch first
+|rule|Species Clause: Limit one of each Pokémon
+|rule|OHKO Clause: OHKO moves are banned
+|rule|Evasion Items Clause: Evasion items are banned
+|rule|Evasion Moves Clause: Evasion moves are banned
+|rule|Endless Battle Clause: Forcing endless battles is banned
+|rule|HP Percentage Mod: HP is shown in percentages
+|rule|One Boost Passer Clause: Limit one Baton Passer that has a way to boost its stats
+|rule|Freeze Clause Mod: Limit one foe frozen
+|
+|t:|1740939672
+|start
+|switch|p1a: Jynx|Jynx, F|100/100
+|switch|p2a: Breloom|Breloom, M|100/100
+|turn|1
+|inactive|Battle timer is ON: inactive players will automatically lose when time's up. (requested by PlatyPunkBean)
+|
+|t:|1740939688
+|switch|p2a: Tyranitar|Tyranitar, M|100/100
+|-weather|Sandstorm|[from] ability: Sand Stream|[of] p2a: Tyranitar
+|move|p1a: Jynx|Ice Beam|p2a: Tyranitar
+|-damage|p2a: Tyranitar|49/100
+|
+|-weather|Sandstorm|[upkeep]
+|-damage|p1a: Jynx|95/100|[from] Sandstorm
+|upkeep
+|turn|2
+|inactiveoff|Battle timer is now OFF.
+|
+|t:|1740939696
+|switch|p2a: Porygon2|Porygon2|100/100
+|-ability|p2a: Porygon2|Oblivious|[from] ability: Trace|[of] p1a: Jynx
+|move|p1a: Jynx|Ice Beam|p2a: Porygon2
+|-damage|p2a: Porygon2|63/100
+|
+|-weather|Sandstorm|[upkeep]
+|-damage|p1a: Jynx|89/100|[from] Sandstorm
+|-damage|p2a: Porygon2|57/100|[from] Sandstorm
+|-heal|p2a: Porygon2|63/100|[from] item: Leftovers
+|upkeep
+|turn|3
+|
+|t:|1740939700
+|move|p1a: Jynx|Lovely Kiss|p2a: Porygon2
+|-status|p2a: Porygon2|slp|[from] move: Lovely Kiss
+|cant|p2a: Porygon2|slp
+|
+|-weather|Sandstorm|[upkeep]
+|-damage|p1a: Jynx|83/100|[from] Sandstorm
+|-damage|p2a: Porygon2|57/100 slp|[from] Sandstorm
+|-heal|p2a: Porygon2|63/100 slp|[from] item: Leftovers
+|upkeep
+|turn|4
+|
+|t:|1740939716
+|switch|p2a: Skarmory|Skarmory, F|100/100
+|move|p1a: Jynx|Mean Look|p2a: Skarmory
+|-activate|p2a: Skarmory|trapped
+|
+|-weather|Sandstorm|[upkeep]
+|-damage|p1a: Jynx|77/100|[from] Sandstorm
+|upkeep
+|turn|5
+|
+|t:|1740939724
+|switch|p1a: Zapdos|Zapdos|100/100
+|move|p2a: Skarmory|Roar|p1a: Zapdos
+|drag|p1a: Dugtrio|Dugtrio, F|100/100
+|
+|-weather|Sandstorm|[upkeep]
+|upkeep
+|turn|6
+|
+|t:|1740939733
+|switch|p1a: Metagross|Metagross|100/100
+|move|p2a: Skarmory|Toxic|p1a: Metagross
+|-immune|p1a: Metagross
+|
+|-weather|Sandstorm|[upkeep]
+|upkeep
+|turn|7
+|
+|t:|1740939737
+|switch|p2a: Gengar|Gengar, M|100/100
+|move|p1a: Metagross|Hidden Power|p2a: Gengar
+|-crit|p2a: Gengar
+|-damage|p2a: Gengar|29/100
+|
+|-weather|Sandstorm|[upkeep]
+|-damage|p2a: Gengar|23/100|[from] Sandstorm
+|-heal|p2a: Gengar|29/100|[from] item: Leftovers
+|upkeep
+|turn|8
+|
+|t:|1740939744
+|move|p2a: Gengar|Will-O-Wisp|p1a: Metagross
+|-status|p1a: Metagross|brn
+|move|p1a: Metagross|Hidden Power|p2a: Gengar
+|-damage|p2a: Gengar|0 fnt
+|faint|p2a: Gengar
+|
+|t:|1740939760
+|switch|p2a: Skarmory|Skarmory, F|100/100
+|
+|-weather|Sandstorm|[upkeep]
+|-damage|p1a: Metagross|88/100 brn|[from] brn
+|upkeep
+|turn|9
+|
+|t:|1740939774
+|switch|p1a: Zapdos|Zapdos|100/100
+|move|p2a: Skarmory|Spikes|p1a: Zapdos
+|-sidestart|p1: PlatyPunkBean|Spikes
+|
+|-weather|Sandstorm|[upkeep]
+|-damage|p1a: Zapdos|94/100|[from] Sandstorm
+|-heal|p1a: Zapdos|100/100|[from] item: Leftovers
+|upkeep
+|turn|10
+|
+|t:|1740939779
+|switch|p2a: Porygon2|Porygon2|63/100 slp
+|-ability|p2a: Porygon2|Pressure|[from] ability: Trace|[of] p1a: Zapdos
+|move|p1a: Zapdos|Thunderbolt|p2a: Porygon2
+|-damage|p2a: Porygon2|18/100 slp
+|
+|-weather|Sandstorm|[upkeep]
+|-damage|p1a: Zapdos|94/100|[from] Sandstorm
+|-damage|p2a: Porygon2|12/100 slp|[from] Sandstorm
+|-heal|p1a: Zapdos|100/100|[from] item: Leftovers
+|-heal|p2a: Porygon2|18/100 slp|[from] item: Leftovers
+|upkeep
+|turn|11
+|
+|t:|1740939784
+|move|p1a: Zapdos|Thunderbolt|p2a: Porygon2
+|-damage|p2a: Porygon2|0 fnt
+|faint|p2a: Porygon2
+|
+|t:|1740939785
+|switch|p2a: Tyranitar|Tyranitar, M|49/100
+|
+|-weather|Sandstorm|[upkeep]
+|-damage|p1a: Zapdos|94/100|[from] Sandstorm
+|-heal|p1a: Zapdos|100/100|[from] item: Leftovers
+|upkeep
+|turn|12
+|
+|t:|1740939792
+|move|p1a: Zapdos|Thunderbolt|p2a: Tyranitar
+|-damage|p2a: Tyranitar|0 fnt
+|faint|p2a: Tyranitar
+|
+|t:|1740939795
+|switch|p2a: Salamence|Salamence, M|100/100
+|-ability|p2a: Salamence|Intimidate|boost
+|-unboost|p1a: Zapdos|atk|1
+|
+|-weather|Sandstorm|[upkeep]
+|-damage|p2a: Salamence|94/100|[from] Sandstorm
+|-damage|p1a: Zapdos|94/100|[from] Sandstorm
+|-heal|p2a: Salamence|100/100|[from] item: Leftovers
+|-heal|p1a: Zapdos|100/100|[from] item: Leftovers
+|upkeep
+|turn|13
+|
+|t:|1740939802
+|move|p2a: Salamence|Dragon Claw|p1a: Zapdos
+|-crit|p1a: Zapdos
+|-damage|p1a: Zapdos|12/100
+|move|p1a: Zapdos|Thunder Wave|p2a: Salamence
+|-status|p2a: Salamence|par
+|
+|-weather|Sandstorm|[upkeep]
+|-damage|p1a: Zapdos|5/100|[from] Sandstorm
+|-damage|p2a: Salamence|94/100 par|[from] Sandstorm
+|-heal|p1a: Zapdos|12/100|[from] item: Leftovers
+|-heal|p2a: Salamence|100/100 par|[from] item: Leftovers
+|upkeep
+|turn|14
+|
+|t:|1740939808
+|move|p1a: Zapdos|Thunderbolt|p2a: Salamence
+|-damage|p2a: Salamence|37/100 par
+|move|p2a: Salamence|Dragon Claw|p1a: Zapdos
+|-damage|p1a: Zapdos|0 fnt
+|faint|p1a: Zapdos
+|
+|t:|1740939819
+|switch|p1a: Metagross|Metagross|88/100 brn
+|-damage|p1a: Metagross|76/100 brn|[from] Spikes
+|
+|-weather|Sandstorm|[upkeep]
+|-damage|p2a: Salamence|31/100 par|[from] Sandstorm
+|-heal|p1a: Metagross|82/100 brn|[from] item: Leftovers
+|-damage|p1a: Metagross|69/100 brn|[from] brn
+|-heal|p2a: Salamence|37/100 par|[from] item: Leftovers
+|upkeep
+|turn|15
+|
+|t:|1740939826
+|move|p1a: Metagross|Explosion|p2a: Salamence
+|-damage|p2a: Salamence|0 fnt
+|faint|p1a: Metagross
+|faint|p2a: Salamence
+|
+|t:|1740939836
+|switch|p2a: Breloom|Breloom, M|100/100
+|switch|p1a: Dugtrio|Dugtrio, F|100/100
+|-damage|p1a: Dugtrio|88/100|[from] Spikes
+|
+|-weather|Sandstorm|[upkeep]
+|-damage|p2a: Breloom|94/100|[from] Sandstorm
+|-heal|p2a: Breloom|100/100|[from] item: Leftovers
+|upkeep
+|turn|16
+|
+|t:|1740939842
+|move|p2a: Breloom|Mach Punch|p1a: Dugtrio
+|-damage|p1a: Dugtrio|30/100
+|move|p1a: Dugtrio|Aerial Ace|p2a: Breloom
+|-supereffective|p2a: Breloom
+|-damage|p2a: Breloom|0 fnt
+|-status|p1a: Dugtrio|psn|[from] ability: Effect Spore|[of] p2a: Breloom
+|faint|p2a: Breloom
+|
+|t:|1740939845
+|switch|p2a: Skarmory|Skarmory, F|100/100
+|
+|-weather|Sandstorm|[upkeep]
+|-damage|p1a: Dugtrio|18/100 psn|[from] psn
+|upkeep
+|turn|17
+|
+|t:|1740939849
+|switch|p1a: Celebi|Celebi|100/100
+|-damage|p1a: Celebi|88/100|[from] Spikes
+|move|p2a: Skarmory|Spikes|p1a: Celebi
+|-sidestart|p1: PlatyPunkBean|Spikes
+|
+|-weather|Sandstorm|[upkeep]
+|-damage|p1a: Celebi|82/100|[from] Sandstorm
+|-heal|p1a: Celebi|88/100|[from] item: Leftovers
+|upkeep
+|turn|18
+|
+|t:|1740939853
+|move|p1a: Celebi|Leech Seed|p2a: Skarmory
+|-start|p2a: Skarmory|move: Leech Seed
+|move|p2a: Skarmory|Roar|p1a: Celebi
+|drag|p1a: Kingdra|Kingdra, M|100/100
+|-damage|p1a: Kingdra|84/100|[from] Spikes
+|
+|-weather|Sandstorm|[upkeep]
+|-damage|p1a: Kingdra|78/100|[from] Sandstorm
+|-heal|p1a: Kingdra|84/100|[from] item: Leftovers
+|-damage|p2a: Skarmory|88/100|[from] Leech Seed|[of] p1a: Kingdra
+|-heal|p1a: Kingdra|98/100|[silent]
+|upkeep
+|turn|19
+|
+|t:|1740939858
+|move|p1a: Kingdra|Rain Dance|p1a: Kingdra
+|-weather|RainDance
+|move|p2a: Skarmory|Toxic|p1a: Kingdra|[miss]
+|-miss|p2a: Skarmory|p1a: Kingdra
+|
+|-weather|RainDance|[upkeep]
+|-heal|p1a: Kingdra|100/100|[from] item: Leftovers
+|-heal|p2a: Skarmory|94/100|[from] item: Leftovers
+|-damage|p2a: Skarmory|82/100|[from] Leech Seed|[of] p1a: Kingdra
+|upkeep
+|turn|20
+|
+|t:|1740939862
+|move|p1a: Kingdra|Hydro Pump|p2a: Skarmory
+|-damage|p2a: Skarmory|0 fnt
+|faint|p2a: Skarmory
+|
+|win|PlatyPunkBean
