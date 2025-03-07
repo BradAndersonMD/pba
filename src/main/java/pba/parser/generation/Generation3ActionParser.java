@@ -3,14 +3,15 @@ package pba.parser.generation;
 import pba.models.Player;
 import pba.models.Pokemon;
 import pba.models.parser.generation.three.Generation3Action;
-import pba.models.replay.generation.Generation3ParsedReplay;
 import pba.models.replay.results.Generation3ReplayResults;
 import pba.service.team.PokemonResolverService;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class Generation3ActionParser implements GenerationActionParser<Generation3Action, Generation3ReplayResults> {
 
@@ -20,8 +21,8 @@ public class Generation3ActionParser implements GenerationActionParser<Generatio
     // Tracks all actions so far - useful for back tracking
     private final LinkedList<Generation3Action> allActions = new LinkedList<>();
 
-    public Generation3ActionParser(Generation3ParsedReplay generation3ParsedReplay){
-        this.playerToPokemon = generation3ParsedReplay.getPlayerToPokemon();
+    public Generation3ActionParser(){
+        this.playerToPokemon = new HashMap<>();
         this.pokemonResolverService = new PokemonResolverService(playerToPokemon);
     }
 
@@ -32,118 +33,162 @@ public class Generation3ActionParser implements GenerationActionParser<Generatio
             return;
         }
 
-        String actionType = action.getActionType();
+        String currentAction = action.getActionType();
         String value = action.getValue();
 
-        if (actionType.contains("|player|")) {
+        // Capture player name + shorthand
+        if (currentAction.contains("|player|")) {
             String[] valueSplit = value.split("\\|");
-            String shortHandName = valueSplit[0] + "a";
-            playerToPokemon.putIfAbsent(shortHandName, new ArrayList<>());
+
+            String shortHandName = valueSplit[0]; // p1
+            String playerName = valueSplit[1]; //  SomePlayerNickname
+
+            if(results.getPlayerOne() == null){
+                results.setPlayerOne(new Player(playerName, shortHandName));
+                playerToPokemon.put(shortHandName, new ArrayList<>());
+            } else {
+                results.setPlayerTwo(new Player(playerName, shortHandName));
+                playerToPokemon.put(shortHandName, new ArrayList<>());
+            }
         }
 
-        if (actionType.contains("|switch|")) {
+        // Capture pokemon swapping into battlefield and its current health
+        // Value contains, handler shortname + pokemon nickname, pokemon name + possible gender,
+        // and their current health
+        // example = p1a: NickName|PokemonName + Gender(?)|100/100
+        if (currentAction.contains("|switch|")) {
             String[] valueSplit = value.split("\\|");
-            String shortHandName = valueSplit[0]; // "p1a: X|Y"
 
-            //TODO: Retrieve pokemon nickname + name and current health 100/100
-//            playerToPokemon.compute(shortHandName, (playerName, pokemons) -> {
-//                pokemons.add(new Pokemon());
-//                return pokemons;
-//            });
+            // Split shorthand name and pokemon nickname
+            String shortHandNameAndPokemonNickName = valueSplit[0]; // "p1a: NickName"
+            String[] shortHandAndPokemonNickNameSplit = shortHandNameAndPokemonNickName.split(":"); // ["p1a", "NickName"]
+            String shortHandName = shortHandAndPokemonNickNameSplit[0].substring(0, 2); // p1a
+            Player player = retrievePlayerForShorthand(shortHandName);
+            String pokemonNickName = shortHandAndPokemonNickNameSplit[1]; // NickName
 
+            // Some pokemon don't have genders, but if they do its captured here.
+            // We need to hand both cases:
+            // Jynx, F
+            // Zapdos
+            String pokemonNameAndPossibleGender = valueSplit[1];
+            String pokemonName = pokemonNameAndPossibleGender.contains(",")
+                    ? pokemonNameAndPossibleGender.substring(pokemonNameAndPossibleGender.indexOf(","))
+                    : pokemonNameAndPossibleGender;
 
-        }
-
-        if (actionType.contains("|-ability|")) {
-
-        }
-
-        if (actionType.contains("|-unboost")) {
-
-        }
-
-        if (actionType.contains("|turn|")) {
-
-        }
-
-        if (actionType.contains("|upkeep")) {
-
-        }
-
-        if (actionType.contains("|-weather")) {
+            // Checks to see if it already exists - add it if missing
+            Optional<Pokemon> possiblePokemon = pokemonResolverService.resolve(player, pokemonNickName);
+            if (possiblePokemon.isEmpty()){
+                Pokemon pokemon = new Pokemon();
+                pokemon.setName(pokemonName);
+                pokemon.setNickname(pokemonNickName);
+                playerToPokemon.get(shortHandName).add(pokemon);
+            }
 
         }
 
-        if (actionType.contains("|drag|")) {
-
+        if (currentAction.contains("|-ability|")) {
+            // TODO:
         }
 
-        if (actionType.contains("|move|")) {
-
+        if (currentAction.contains("|-unboost")) {
+            // TODO:
         }
 
-        if (actionType.contains("|-start")) {
+        if (currentAction.contains("|turn|")) {
+            // TODO:
+        }
+
+        if (currentAction.contains("|upkeep")) {
+            // TODO:
+        }
+
+        if (currentAction.contains("|-weather")) {
+            // TODO:
+        }
+
+        if (currentAction.contains("|drag|")) {
+            // TODO:
+        }
+
+        if (currentAction.contains("|move|")) {
+            // TODO:
+        }
+
+        if (currentAction.contains("|-start")) {
+            // TODO:
             // use allActions
         }
 
-        if (actionType.contains("|-resisted")) {
+        if (currentAction.contains("|-resisted")) {
+            // TODO:
             // use allActions
         }
 
-        if (actionType.contains("|-singleturn")) {
+        if (currentAction.contains("|-singleturn")) {
+            // TODO:
             // use allActions
         }
 
-        if (actionType.contains("|-setboost|")) {
+        if (currentAction.contains("|-setboost|")) {
+            // TODO:
             // use allActions
         }
 
-        if (actionType.contains("|-sideend")) {
+        if (currentAction.contains("|-sideend")) {
+            // TODO:
             // use allActions
         }
 
-        if (actionType.contains("|-supereffective")) {
+        if (currentAction.contains("|-supereffective")) {
+            // TODO:
             // use allActions
         }
 
-        if (actionType.contains("|-sidestart")) {
+        if (currentAction.contains("|-sidestart")) {
+            // TODO:
             // use allActions
         }
 
-        if (actionType.contains("|-damage|")) {
+        if (currentAction.contains("|-damage|")) {
+            // TODO:
             // use allActions
         }
 
-        if (actionType.contains("|-crit|")) {
+        if (currentAction.contains("|-crit|")) {
+            // TODO:
             // use allActions
         }
 
-        if (actionType.contains("|-fail|")) {
+        if (currentAction.contains("|-fail|")) {
+            // TODO:
             // use allActions
         }
 
-        if (actionType.contains("|-status|")) {
+        if (currentAction.contains("|-status|")) {
+            // TODO:
             // use allActions
         }
 
-        if (actionType.contains("|-miss|")) {
+        if (currentAction.contains("|-miss|")) {
+            // TODO:
             // use allActions
         }
 
-        if (actionType.contains("|-heal|")) {
+        if (currentAction.contains("|-heal|")) {
+            // TODO:
             // use allActions
         }
 
-        if (actionType.contains("|cant|")) {
-
+        if (currentAction.contains("|cant|")) {
+            // TODO:
         }
 
-        if (actionType.contains("|faint|")) {
-
+        if (currentAction.contains("|faint|")) {
+            // TODO:
         }
 
-        if (actionType.contains("|win|")) {
-
+        if (currentAction.contains("|win|")) {
+            // TODO:
         }
 
         allActions.add(action);
@@ -151,8 +196,29 @@ public class Generation3ActionParser implements GenerationActionParser<Generatio
 
     @Override
     public Generation3ReplayResults retrieveResults() {
+        results.setAllActions(allActions);
+        results.setPlayerOnePokemons(playerToPokemon.get("p1"));
+        results.setPlayerTwoPokemons(playerToPokemon.get("p2"));
         return results;
     }
 
+    /**
+     * Retrieves the {@link Player} for a given shorthand name
+     * @param shorthand the shorthand name to resolve
+     * @return the {@link Player} with the matching shorthand name
+     */
+    private Player retrievePlayerForShorthand(String shorthand) {
+        return shorthand.contains(results.getPlayerOne().getShortHandName())
+                ? results.getPlayerOne()
+                : results.getPlayerTwo();
+    }
+
+    /**
+     * Returns the current nodes previous {@link Generation3Action}
+     * @return the previous nodes {@link Generation3Action}
+     */
+    private Generation3Action getPreviousAction() {
+        return allActions.listIterator().previous();
+    }
 
 }

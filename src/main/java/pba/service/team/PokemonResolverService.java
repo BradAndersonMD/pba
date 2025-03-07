@@ -3,10 +3,10 @@ package pba.service.team;
 import lombok.AllArgsConstructor;
 import pba.models.Player;
 import pba.models.Pokemon;
-import pba.models.exceptions.PbaRuntimeException;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @AllArgsConstructor
 public class PokemonResolverService {
@@ -19,11 +19,11 @@ public class PokemonResolverService {
      * @param name the name to lookup for the player
      * @return the found {@link Pokemon}
      */
-    public Pokemon resolve(Player player, String name) {
+    public Optional<Pokemon> resolve(Player player, String name) {
         return playerToPokemon.get(player.getShortHandName()).stream()
-                .findFirst()
                 .filter(pokemon -> pokemon.getName().equals(name) || pokemon.getNickname().equals(name))
-                .orElseThrow(() -> new PbaRuntimeException("Failed to find pokemon [" + name + "}] by owner [" + player.getName() + "]"));
+                .findFirst();
+
     }
 
 }

@@ -11,7 +11,9 @@ public class Pokemon {
 
   private String name;
   private String nickname;
-  private int totalHealth;
+  private String passive;
+  private int currentHealth = 100;
+  private int totalHealth = 100;
   private int damageTaken;
   private int damageDealt;
   private int deaths;

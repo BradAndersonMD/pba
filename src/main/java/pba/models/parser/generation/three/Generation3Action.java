@@ -38,7 +38,8 @@ public class Generation3Action implements GenerationAction {
         return List.of(
             "|player|", // player name p1a/p2a
             "|switch|", // bringing pokemon to the field
-            "|-ability|", // Copies ability from
+            "|-surestatus|", // removes a status
+            "|-ability|", // Copies passive ability from another pokemon
             "|-unboost", // reduces stat
             "|turn|", // turn number
             "|upkeep", // linked to weather/items? Leftovers?
@@ -66,7 +67,7 @@ public class Generation3Action implements GenerationAction {
 
     @Override
     public boolean isInactionable() {
-        return !getEligibleActions().contains(this.actionType);
+        return getEligibleActions().stream().noneMatch(this.actionType::contains);
     }
 
 }
