@@ -19,6 +19,8 @@ public class Generation3Action implements GenerationAction {
         this.value = line.substring(actionType.length());
     }
 
+
+
     @Override
     public List<String> getIneligibleActions() {
         return List.of(

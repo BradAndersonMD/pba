@@ -1,6 +1,7 @@
 package pba.parser.generation;
 
-import pba.models.Player;
+import pba.models.Pair;
+import pba.models.Trainer;
 import pba.models.Pokemon;
 import pba.models.parser.generation.three.Generation3Action;
 import pba.models.replay.results.Generation3ReplayResults;
@@ -15,91 +16,103 @@ import java.util.Optional;
 
 public class Generation3ActionParser implements GenerationActionParser<Generation3Action, Generation3ReplayResults> {
 
-    private final Map<String, List<Pokemon>> playerToPokemon;
+    private final Map<String, List<Pokemon>> trainerToPokemon;
     private final PokemonResolverService pokemonResolverService;
     private final Generation3ReplayResults results = new Generation3ReplayResults();
     // Tracks all actions so far - useful for back tracking
     private final LinkedList<Generation3Action> allActions = new LinkedList<>();
 
     public Generation3ActionParser(){
-        this.playerToPokemon = new HashMap<>();
-        this.pokemonResolverService = new PokemonResolverService(playerToPokemon);
+        this.trainerToPokemon = new HashMap<>();
+        this.pokemonResolverService = new PokemonResolverService(trainerToPokemon);
+    }
+
+    @Override
+    public Generation3ReplayResults retrieveResults() {
+        results.setAllActions(allActions);
+        results.setTrainerOnePokemons(trainerToPokemon.get("p1"));
+        results.setTrainerTwoPokemons(trainerToPokemon.get("p2"));
+        return results;
     }
 
     @Override
     public void applyAction(Generation3Action action) {
+        allActions.add(action);
         if(action.isInactionable()){
-            allActions.add(action);
             return;
         }
 
         String currentAction = action.getActionType();
         String value = action.getValue();
 
-        // Capture player name + shorthand
+        // Capture Trainer name + shorthand
         if (currentAction.contains("|player|")) {
             String[] valueSplit = value.split("\\|");
 
             String shortHandName = valueSplit[0]; // p1
-            String playerName = valueSplit[1]; //  SomePlayerNickname
+            String trainerName = valueSplit[1]; //  SomeTrainerNickname
 
-            if(results.getPlayerOne() == null){
-                results.setPlayerOne(new Player(playerName, shortHandName));
-                playerToPokemon.put(shortHandName, new ArrayList<>());
+            if(results.getTrainerOne() == null){
+                results.setTrainerOne(new Trainer(trainerName, shortHandName));
+                trainerToPokemon.put(shortHandName, new ArrayList<>());
             } else {
-                results.setPlayerTwo(new Player(playerName, shortHandName));
-                playerToPokemon.put(shortHandName, new ArrayList<>());
+                results.setTrainerTwo(new Trainer(trainerName, shortHandName));
+                trainerToPokemon.put(shortHandName, new ArrayList<>());
             }
+            return;
         }
 
-        // Capture pokemon swapping into battlefield and its current health
-        // Value contains, handler shortname + pokemon nickname, pokemon name + possible gender,
+        // Capture Pokémon swapping into battlefield and its current health
+        // Value contains, handler shortname + Pokémon nickname, Pokémon name + possible gender,
         // and their current health
         // example = p1a: NickName|PokemonName + Gender(?)|100/100
         if (currentAction.contains("|switch|")) {
             String[] valueSplit = value.split("\\|");
+            // Split into resolved Trainer and Pokémon - "p1a: NickName"
+            Pair<Trainer, String> trainerAndPokemonNickName = retrieveTrainerAndPokemonNickName(value);
+            Trainer trainer = trainerAndPokemonNickName.key(); // Trainer
+            String pokemonNickName = trainerAndPokemonNickName.value(); // Pokemon nickname
 
-            // Split shorthand name and pokemon nickname
-            String shortHandNameAndPokemonNickName = valueSplit[0]; // "p1a: NickName"
-            String[] shortHandAndPokemonNickNameSplit = shortHandNameAndPokemonNickName.split(":"); // ["p1a", "NickName"]
-            String shortHandName = shortHandAndPokemonNickNameSplit[0].substring(0, 2); // p1a
-            Player player = retrievePlayerForShorthand(shortHandName);
-            String pokemonNickName = shortHandAndPokemonNickNameSplit[1]; // NickName
+            // If we can't resolve this Pokémon this means we need to create it.
+            Optional<Pokemon> possiblePokemon = Optional.ofNullable(pokemonResolverService.resolve(trainer, pokemonNickName));
+            if(possiblePokemon.isEmpty()) {
+                // Some Pokémon don't have genders, but if they do its captured here.
+                // We need to hand both cases:
+                // Jynx, F
+                // Zapdos
+                String pokemonNameAndPossibleGender = valueSplit[1];
+                String pokemonName = pokemonNameAndPossibleGender.contains(",")
+                        ? pokemonNameAndPossibleGender.substring(0, pokemonNameAndPossibleGender.indexOf(","))
+                        : pokemonNameAndPossibleGender;
 
-            // Some pokemon don't have genders, but if they do its captured here.
-            // We need to hand both cases:
-            // Jynx, F
-            // Zapdos
-            String pokemonNameAndPossibleGender = valueSplit[1];
-            String pokemonName = pokemonNameAndPossibleGender.contains(",")
-                    ? pokemonNameAndPossibleGender.substring(pokemonNameAndPossibleGender.indexOf(","))
-                    : pokemonNameAndPossibleGender;
-
-            // Checks to see if it already exists - add it if missing
-            Optional<Pokemon> possiblePokemon = pokemonResolverService.resolve(player, pokemonNickName);
-            if (possiblePokemon.isEmpty()){
                 Pokemon pokemon = new Pokemon();
-                pokemon.setName(pokemonName);
-                pokemon.setNickname(pokemonNickName);
-                playerToPokemon.get(shortHandName).add(pokemon);
+                pokemon.setTrainer(trainer);
+                pokemon.setName(pokemonName.trim());
+                pokemon.setNickname(pokemonNickName.trim());
+                trainerToPokemon.get(trainer.getShortHandName()).add(pokemon);
             }
-
+            return;
         }
+
+        /*
+         * All pokemon should be resolvable at this point.
+         */
+        Pair<Trainer, Pokemon> trainerAndPokemon = retrieveTrainerAndResolvedPokemon(value);
+        Trainer trainer = trainerAndPokemon.key();
+        Pokemon pokemon = trainerAndPokemon.value();
 
         if (currentAction.contains("|-ability|")) {
-            // TODO:
-        }
-
-        if (currentAction.contains("|-unboost")) {
-            // TODO:
+            String ability = value.split("\\|")[1];
+            pokemon.setAbility(ability);
+            updatePokemon(trainer, pokemon);
         }
 
         if (currentAction.contains("|turn|")) {
-            // TODO:
+            results.incrementTurnCount();
         }
 
         if (currentAction.contains("|upkeep")) {
-            // TODO:
+            // TODO: SKIP
         }
 
         if (currentAction.contains("|-weather")) {
@@ -112,6 +125,10 @@ public class Generation3ActionParser implements GenerationActionParser<Generatio
 
         if (currentAction.contains("|move|")) {
             // TODO:
+        }
+
+        if (currentAction.contains("|-unboost")) {
+            // TODO: low priority
         }
 
         if (currentAction.contains("|-start")) {
@@ -191,26 +208,50 @@ public class Generation3ActionParser implements GenerationActionParser<Generatio
             // TODO:
         }
 
-        allActions.add(action);
-    }
-
-    @Override
-    public Generation3ReplayResults retrieveResults() {
-        results.setAllActions(allActions);
-        results.setPlayerOnePokemons(playerToPokemon.get("p1"));
-        results.setPlayerTwoPokemons(playerToPokemon.get("p2"));
-        return results;
     }
 
     /**
-     * Retrieves the {@link Player} for a given shorthand name
-     * @param shorthand the shorthand name to resolve
-     * @return the {@link Player} with the matching shorthand name
+     * Splits a value into a {@link Trainer} and pokemon nick name {@link Pair}
+     * @param value the value to split and parse
+     * @return a {@link Pair} of {@link Trainer} and {@link Pokemon}
      */
-    private Player retrievePlayerForShorthand(String shorthand) {
-        return shorthand.contains(results.getPlayerOne().getShortHandName())
-                ? results.getPlayerOne()
-                : results.getPlayerTwo();
+    private Pair<Trainer, String> retrieveTrainerAndPokemonNickName(String value) {
+        // Split shorthand name and pokemon nickname
+        String[] splitValue = value.split("\\|")[0].split(":"); // ["p1a", "NickName"]
+        Trainer trainer = retrieveTrainerForShorthand(splitValue[0].substring(0, 2));
+        return new Pair<>(trainer,  splitValue[1]);
+    }
+
+    /**
+     * Splits a value into a {@link Trainer} and Pokémon nick name {@link Pair}
+     * @param value the value to split and parse
+     * @return a {@link Pair} of {@link Trainer} and {@link Pokemon}
+     */
+    private Pair<Trainer, Pokemon> retrieveTrainerAndResolvedPokemon(String value) {
+        // Split shorthand name and Pokémon nickname
+        String[] splitValue = value.split("\\|")[0].split(":"); // ["p1a", "NickName"]
+        Trainer trainer = retrieveTrainerForShorthand(splitValue[0].substring(0, 2));
+        Pokemon pokemon = pokemonResolverService.resolve(trainer, splitValue[1].trim());
+        return new Pair<>(trainer, pokemon);
+    }
+
+
+    /**
+     * Retrieves the {@link Trainer} for a given shorthand name
+     * @param shorthand the shorthand name to resolve
+     * @return the {@link Trainer} with the matching shorthand name
+     */
+    private Trainer retrieveTrainerForShorthand(String shorthand) {
+        return shorthand.contains(results.getTrainerOne().getShortHandName())
+                ? results.getTrainerOne()
+                : results.getTrainerTwo();
+    }
+
+    private void updatePokemon(Trainer trainer, Pokemon pokemonToUpdate){
+        List<Pokemon> pokemons = trainerToPokemon.get(trainer.getShortHandName());
+        Optional<Pokemon> possiblePokemon = pokemons.stream().filter(pokemon -> pokemon.getUuid().equals(pokemonToUpdate.getUuid()))
+                .findFirst();
+        possiblePokemon.ifPresent(pokemon -> pokemon.update(pokemonToUpdate));
     }
 
     /**

@@ -2,8 +2,8 @@
 |j|☆PBAPoliwraths
 |t:|1740939672
 |gametype|singles
-|player|p1|PlatyPunkBean|barry|
-|player|p2|PBAPoliwraths|baker|
+|trainer|p1|PlatyPunkBean|barry|
+|trainer|p2|PBAPoliwraths|baker|
 |teamsize|p1|6
 |teamsize|p2|6
 |gen|3
