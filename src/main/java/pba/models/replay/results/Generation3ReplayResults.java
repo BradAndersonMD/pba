@@ -23,7 +23,9 @@ public class Generation3ReplayResults extends ReplayResults {
     private List<Pokemon> trainerOnePokemons;
     private Trainer trainerTwo;
     private List<Pokemon> trainerTwoPokemons;
+    @Builder.Default
     private int turnCount = 0;
+    private Trainer winner;
 
     private LinkedList<Generation3Action> allActions;
 

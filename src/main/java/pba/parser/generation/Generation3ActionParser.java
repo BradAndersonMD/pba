@@ -1,9 +1,12 @@
 package pba.parser.generation;
 
 import pba.models.Pair;
+import pba.models.StatusEffect;
 import pba.models.Trainer;
 import pba.models.Pokemon;
 import pba.models.parser.generation.three.Generation3Action;
+import pba.models.parser.generation.three.Generation3GameState;
+import pba.models.parser.generation.three.Weather;
 import pba.models.replay.results.Generation3ReplayResults;
 import pba.service.team.PokemonResolverService;
 
@@ -11,6 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 import java.util.Optional;
 
@@ -21,8 +25,9 @@ public class Generation3ActionParser implements GenerationActionParser<Generatio
     private final Generation3ReplayResults results = new Generation3ReplayResults();
     // Tracks all actions so far - useful for back tracking
     private final LinkedList<Generation3Action> allActions = new LinkedList<>();
+    private final Generation3GameState gameState = new Generation3GameState();
 
-    public Generation3ActionParser(){
+    public Generation3ActionParser() {
         this.trainerToPokemon = new HashMap<>();
         this.pokemonResolverService = new PokemonResolverService(trainerToPokemon);
     }
@@ -44,21 +49,13 @@ public class Generation3ActionParser implements GenerationActionParser<Generatio
 
         String currentAction = action.getActionType();
         String value = action.getValue();
+        String[] valueSplit = value.split("\\|");
 
         // Capture Trainer name + shorthand
         if (currentAction.contains("|player|")) {
-            String[] valueSplit = value.split("\\|");
-
             String shortHandName = valueSplit[0]; // p1
             String trainerName = valueSplit[1]; //  SomeTrainerNickname
-
-            if(results.getTrainerOne() == null){
-                results.setTrainerOne(new Trainer(trainerName, shortHandName));
-                trainerToPokemon.put(shortHandName, new ArrayList<>());
-            } else {
-                results.setTrainerTwo(new Trainer(trainerName, shortHandName));
-                trainerToPokemon.put(shortHandName, new ArrayList<>());
-            }
+            addTrainerToGameState(new Trainer(trainerName, shortHandName));
             return;
         }
 
@@ -67,7 +64,6 @@ public class Generation3ActionParser implements GenerationActionParser<Generatio
         // and their current health
         // example = p1a: NickName|PokemonName + Gender(?)|100/100
         if (currentAction.contains("|switch|")) {
-            String[] valueSplit = value.split("\\|");
             // Split into resolved Trainer and Pokémon - "p1a: NickName"
             Pair<Trainer, String> trainerAndPokemonNickName = retrieveTrainerAndPokemonNickName(value);
             Trainer trainer = trainerAndPokemonNickName.key(); // Trainer
@@ -94,129 +90,140 @@ public class Generation3ActionParser implements GenerationActionParser<Generatio
             return;
         }
 
-        /*
-         * All pokemon should be resolvable at this point.
-         */
-        Pair<Trainer, Pokemon> trainerAndPokemon = retrieveTrainerAndResolvedPokemon(value);
-        Trainer trainer = trainerAndPokemon.key();
-        Pokemon pokemon = trainerAndPokemon.value();
-
-        if (currentAction.contains("|-ability|")) {
-            String ability = value.split("\\|")[1];
-            pokemon.setAbility(ability);
-            updatePokemon(trainer, pokemon);
-        }
-
-        if (currentAction.contains("|turn|")) {
-            results.incrementTurnCount();
-        }
-
-        if (currentAction.contains("|upkeep")) {
-            // TODO: SKIP
-        }
-
-        if (currentAction.contains("|-weather")) {
-            // TODO:
-        }
-
-        if (currentAction.contains("|drag|")) {
-            // TODO:
-        }
-
-        if (currentAction.contains("|move|")) {
-            // TODO:
-        }
-
-        if (currentAction.contains("|-unboost")) {
-            // TODO: low priority
-        }
-
-        if (currentAction.contains("|-start")) {
-            // TODO:
-            // use allActions
-        }
-
-        if (currentAction.contains("|-resisted")) {
-            // TODO:
-            // use allActions
-        }
-
-        if (currentAction.contains("|-singleturn")) {
-            // TODO:
-            // use allActions
-        }
-
-        if (currentAction.contains("|-setboost|")) {
-            // TODO:
-            // use allActions
-        }
-
-        if (currentAction.contains("|-sideend")) {
-            // TODO:
-            // use allActions
-        }
-
-        if (currentAction.contains("|-supereffective")) {
-            // TODO:
-            // use allActions
-        }
-
-        if (currentAction.contains("|-sidestart")) {
-            // TODO:
-            // use allActions
-        }
-
         if (currentAction.contains("|-damage|")) {
-            // TODO:
-            // use allActions
+            Pair<Trainer, Pokemon> trainerAndPokemon = retrieveTrainerAndResolvedPokemon(value);
+            Trainer trainer = trainerAndPokemon.key();
+            Pokemon pokemon = trainerAndPokemon.value();
+
+            int health = Integer.parseInt(value.substring(value.indexOf("|") + 1, value.indexOf("/")));
+            int damageDealt = pokemon.getCurrentHealth() - health;
+
+            // Weather/StatusEffect damage
+            if(value.contains("[from]")) {
+
+                String parsed = valueSplit[2].substring(6).trim();
+
+                // Attribute to correct Pokémon
+                // Trying converting to weather
+                Weather foundWeather = Weather.get(parsed);
+                if(foundWeather != null){
+                    Pokemon weatherPokemon = gameState.getWeatherToPokemon().value();
+                    Trainer weatherPokemonTrainer = weatherPokemon.getTrainer();
+
+                    weatherPokemon.dealDamage(damageDealt);
+                    updatePokemon(weatherPokemonTrainer, weatherPokemon);
+                }
+                else {
+                    // Must be a status effect
+                    Pair<StatusEffect, Pokemon> statusEffectAndPokemon = pokemon.getStatusEffectAndPokemon();
+                    Pokemon statusEffectPokemon = statusEffectAndPokemon.value();
+                    Trainer statusEffectPokemonTrainer = statusEffectPokemon.getTrainer();
+
+                    statusEffectPokemon.dealDamage(damageDealt);
+                    updatePokemon(statusEffectPokemonTrainer, statusEffectPokemon);
+                }
+                pokemon.takeDamage(damageDealt);
+            } else {
+
+                Generation3Action previousMoveAction = getPreviousActionUntil("|move|");
+                String previousValue = previousMoveAction.getValue().split("\\|")[0];
+
+                Pair<Trainer, Pokemon> previousTrainerAndPokemon = retrieveTrainerAndResolvedPokemon(previousValue);
+                Trainer previousTrainer = previousTrainerAndPokemon.key();
+                Pokemon previousPokemon = previousTrainerAndPokemon.value();
+
+                previousPokemon.dealDamage(damageDealt);
+                pokemon.takeDamage(damageDealt);
+
+                updatePokemon(previousTrainer, previousPokemon);
+            }
+
+            updatePokemon(trainer, pokemon);
+
+            return;
         }
 
-        if (currentAction.contains("|-crit|")) {
-            // TODO:
-            // use allActions
-        }
+        if (currentAction.contains("|-weather") && value.contains("[of]")) {
+            Pair<Trainer, Pokemon> weatherTrainerAndPokemon = retrieveTrainerAndResolvedPokemon(valueSplit[2].substring(5));
+            Trainer weatherTrainer = weatherTrainerAndPokemon.key();
+            Pokemon weatherPokemon = weatherTrainerAndPokemon.value();
 
-        if (currentAction.contains("|-fail|")) {
-            // TODO:
-            // use allActions
+            gameState.setWeatherToPokemon(new Pair<>(Weather.get(valueSplit[0]), weatherPokemon));
+            String unparsedAbility = valueSplit[1];
+            String ability = unparsedAbility.substring((unparsedAbility.indexOf(":") + 1)).trim();
+
+            weatherPokemon.setAbility(ability);
+            updatePokemon(weatherTrainer, weatherPokemon);
+            return;
         }
 
         if (currentAction.contains("|-status|")) {
-            // TODO:
-            // use allActions
-        }
+            Pair<Trainer, Pokemon> trainerAndPokemon = retrieveTrainerAndResolvedPokemon(value);
+            Trainer trainer = trainerAndPokemon.key();
+            Pokemon pokemon = trainerAndPokemon.value();
 
-        if (currentAction.contains("|-miss|")) {
-            // TODO:
-            // use allActions
+            Generation3Action previousMoveAction = getPreviousActionUntil("|move|");
+            String previousValue = previousMoveAction.getValue().split("\\|")[0];
+
+            Pair<Trainer, Pokemon> previousTrainerAndPokemon = retrieveTrainerAndResolvedPokemon(previousValue);
+            Pokemon previousPokemon = previousTrainerAndPokemon.value();
+
+            pokemon.setStatusEffectAndPokemon(new Pair<>(StatusEffect.get(valueSplit[1]), previousPokemon));
+            updatePokemon(trainer, pokemon);
+            return;
         }
 
         if (currentAction.contains("|-heal|")) {
-            // TODO:
-            // use allActions
-        }
+            Pair<Trainer, Pokemon> trainerAndPokemon = retrieveTrainerAndResolvedPokemon(value);
+            Trainer trainer = trainerAndPokemon.key();
+            Pokemon pokemon = trainerAndPokemon.value();
 
-        if (currentAction.contains("|cant|")) {
-            // TODO:
+            String unparsedHealth = value.split("\\|")[1];
+            int health = Integer.parseInt(unparsedHealth.substring(0, unparsedHealth.indexOf("/")));
+            pokemon.setCurrentHealth(health);
+            updatePokemon(trainer, pokemon);
+            return;
         }
 
         if (currentAction.contains("|faint|")) {
-            // TODO:
+            Pair<Trainer, Pokemon> trainerAndPokemon = retrieveTrainerAndResolvedPokemon(value);
+            Trainer trainer = trainerAndPokemon.key();
+            Pokemon pokemon = trainerAndPokemon.value();
+
+            pokemon.setTotalHealth(0);
+            updatePokemon(trainer, pokemon);
+            return;
         }
 
         if (currentAction.contains("|win|")) {
-            // TODO:
+            Trainer winner = value.contains(results.getTrainerOne().getName())
+                    ? results.getTrainerOne()
+                    : results.getTrainerTwo();
+            results.setWinner(winner);
         }
 
     }
 
     /**
-     * Splits a value into a {@link Trainer} and pokemon nick name {@link Pair}
+     * Adds {@link Trainer} one or two into the game state mapping
+     * @param trainer the trainer to add
+     */
+    private void addTrainerToGameState(Trainer trainer) {
+        if (results.getTrainerOne() == null){
+            results.setTrainerOne(trainer);
+        } else {
+            results.setTrainerTwo(trainer);
+        }
+        trainerToPokemon.put(trainer.getShortHandName(), new ArrayList<>());
+    }
+
+    /**
+     * Splits a value into a {@link Trainer} and Pokémon nick name {@link Pair}
      * @param value the value to split and parse
      * @return a {@link Pair} of {@link Trainer} and {@link Pokemon}
      */
     private Pair<Trainer, String> retrieveTrainerAndPokemonNickName(String value) {
-        // Split shorthand name and pokemon nickname
+        // Split shorthand name and Pokémon nickname
         String[] splitValue = value.split("\\|")[0].split(":"); // ["p1a", "NickName"]
         Trainer trainer = retrieveTrainerForShorthand(splitValue[0].substring(0, 2));
         return new Pair<>(trainer,  splitValue[1]);
@@ -254,12 +261,17 @@ public class Generation3ActionParser implements GenerationActionParser<Generatio
         possiblePokemon.ifPresent(pokemon -> pokemon.update(pokemonToUpdate));
     }
 
-    /**
-     * Returns the current nodes previous {@link Generation3Action}
-     * @return the previous nodes {@link Generation3Action}
-     */
-    private Generation3Action getPreviousAction() {
-        return allActions.listIterator().previous();
+    private Generation3Action getPreviousActionUntil(String actionTypeLookup) {
+        ListIterator<Generation3Action> generation3ActionListIterator = allActions.listIterator(allActions.size());
+        Generation3Action previous = null;
+        while (generation3ActionListIterator.hasPrevious()) {
+            previous = generation3ActionListIterator.previous();
+            if(previous.getActionType().equals(actionTypeLookup)) {
+                break;
+            }
+        }
+
+        return previous;
     }
 
 }

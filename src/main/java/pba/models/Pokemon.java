@@ -16,23 +16,24 @@ public class Pokemon {
   private String nickname;
   private String ability;
   private String uuid = UUID.randomUUID().toString();
+  private String item;
+  // Tracks the status and the Pokémon that caused it
+  private Pair<StatusEffect, Pokemon> statusEffectAndPokemon;
   private int currentHealth = 100;
   private int totalHealth = 100;
   private int damageTaken;
   private int damageDealt;
-  private int deaths;
   private int knockouts;
 
-  public int getHealth() {
-    return totalHealth - damageTaken;
+  public void takeDamage(int damage){
+    this.currentHealth = this.currentHealth - damage;
   }
 
-  public void setTotalHealth() {
-    this.totalHealth -= damageTaken;
+  public void dealDamage(int damage){
+    this.damageDealt += damage;
   }
 
-
-  public Pokemon update(Pokemon pokemon){
+  public void update(Pokemon pokemon) {
     this.trainer = pokemon.trainer;
     this.name = pokemon.name;
     this.nickname = pokemon.nickname;
@@ -42,9 +43,7 @@ public class Pokemon {
     this.totalHealth = pokemon.totalHealth;
     this.damageTaken = pokemon.damageTaken;
     this.damageDealt = pokemon.damageDealt;
-    this.deaths = pokemon.deaths;
     this.knockouts = pokemon.knockouts;
-    return this;
   }
 
 }

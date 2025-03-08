@@ -12,7 +12,7 @@ public class Trainer {
     private final String name;
     private final String shortHandName;
 
-    public Trainer(String name, String shortHandName){
+    public Trainer(String name, String shortHandName) {
         this.name = name;
         this.shortHandName = shortHandName;
     }

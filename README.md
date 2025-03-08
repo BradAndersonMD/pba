@@ -1,4 +1,4 @@
-# Pokemon Showdown Replay Analyzer
+# Pokémon Showdown Replay Analyzer
 
 # TODO:
  - Generation 3 Parser
