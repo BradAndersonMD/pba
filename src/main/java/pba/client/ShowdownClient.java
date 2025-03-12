@@ -12,15 +12,14 @@ import reactor.core.publisher.Mono;
 public class ShowdownClient {
 
   private static final String URL = "https://replay.pokemonshowdown.com/";
-  private WebClient webClient;
+
+    private WebClient webClient;
 
   @PostConstruct
   protected void setWebClient() {
-    webClient =
-        WebClient
-          .builder()
-          .baseUrl(URL)
-          .build();
+        webClient = WebClient.builder()
+              .baseUrl(URL)
+              .build();
   }
 
   public Mono<Replay> getReplay(String replayId) {

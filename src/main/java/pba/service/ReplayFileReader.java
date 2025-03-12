@@ -68,7 +68,7 @@ public class ReplayFileReader {
    */
   private String convertUrl(String url) {
     String replayId = url.substring(url.lastIndexOf("/") + 1);
-    if(replayId.contains("battle-")) {
+    if (replayId.contains("battle-")) {
       return replayId.substring(replayId.indexOf("-") + 1);
     }
 

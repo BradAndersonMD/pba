@@ -1,4 +1,7 @@
 # Pokémon Showdown Replay Analyzer
 
 # TODO:
- - Generation 3 Parser
+
+
+Deficiencies:
+    - Generation 3 OU Parser - Leech Seed calculation is wrong

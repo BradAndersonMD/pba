@@ -1,3 +1,7 @@
 spring:
   main:
     web-application-type: none
+
+pba:
+  results:
+    output-directory: # desired output directory

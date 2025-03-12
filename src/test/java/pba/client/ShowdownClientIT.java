@@ -1,19 +1,18 @@
 package pba.client;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
+import java.net.URL;
 import org.junit.jupiter.api.Test;
 import pba.models.replay.Replay;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
-import java.io.IOException;
-import java.net.URL;
-
-import static org.assertj.core.api.Assertions.assertThat;
-
 class ShowdownClientIT {
 
-    private final ObjectMapper mapper = new ObjectMapper();
+  private final ObjectMapper mapper = new ObjectMapper();
 
     @Test
     void itShouldPull() throws IOException {
@@ -27,9 +26,11 @@ class ShowdownClientIT {
         .verifyComplete();
     }
 
-    private Replay buildExpected() throws IOException {
-        URL expected = ShowdownClientIT.class.getClassLoader().getResource("replays/gen-3-ou/gen3ou-2311036422.json");
-        return mapper.readValue(expected, Replay.class);
-    }
-
+  private Replay buildExpected() throws IOException {
+    URL expected =
+        ShowdownClientIT.class
+            .getClassLoader()
+            .getResource("replays/gen-3-ou/gen3ou-2311036422.json");
+    return mapper.readValue(expected, Replay.class);
+  }
 }

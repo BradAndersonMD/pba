@@ -1,12 +1,9 @@
 package pba.parser.generation;
 
-import pba.models.parser.generation.GenerationAction;
-import pba.models.replay.results.ReplayResults;
+import pba.models.replay.data.GenerationData;
 
-public interface GenerationActionParser<T extends GenerationAction, R extends ReplayResults> {
+public interface GenerationActionParser<R extends GenerationData> {
 
-    void applyAction(T action);
-
-    R retrieveResults();
+  R parseLines(String[] lines);
 
 }

@@ -1,9 +1,11 @@
 package pba.service.analyzer;
 
-import pba.models.replay.results.ReplayResults;
+import pba.models.replay.data.GenerationData;
+import pba.models.replay.results.ReplayResult;
 
-public interface ResultsAnalyzer<T extends ReplayResults> {
+import java.util.List;
 
-  void analyze(T replayResults);
+public interface ResultsAnalyzer<T extends GenerationData, R extends ReplayResult> {
 
+   R analyze(List<T> replayResults);
 }

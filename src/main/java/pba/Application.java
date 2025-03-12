@@ -1,18 +1,19 @@
 package pba;
 
 import java.io.File;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
-import pba.service.ReplayService;
+import pba.service.replay.ReplayService;
 
+@RequiredArgsConstructor
 @SpringBootApplication
 public class Application {
 
-  @Autowired private ReplayService replayService;
+  private final ReplayService replayService;
 
   public static void main(String[] args) {
     SpringApplication.run(Application.class, args);

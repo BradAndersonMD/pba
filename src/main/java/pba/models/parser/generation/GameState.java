@@ -1,6 +1,3 @@
 package pba.models.parser.generation;
 
-public class GameState {
-
-
-}
+public class GameState {}

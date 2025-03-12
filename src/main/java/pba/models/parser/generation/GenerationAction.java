@@ -4,8 +4,9 @@ import java.util.List;
 
 public interface GenerationAction {
 
-    List<String> getIneligibleActions();
-    List<String> getEligibleActions();
-    boolean isInactionable();
+  List<String> getIneligibleActions();
 
+  List<String> getEligibleActions();
+
+  boolean isEligibleAction();
 }

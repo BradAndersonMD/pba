@@ -1,29 +1,35 @@
 package pba.parser.generation;
 
-import lombok.extern.slf4j.Slf4j;
-import pba.models.parser.generation.three.Generation3Action;
-import pba.models.replay.Replay;
-import pba.models.replay.results.Generation3ReplayResults;
-import pba.parser.ReplayParser;
-
 import java.util.List;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
+import pba.models.replay.Replay;
+import pba.models.replay.data.Generation3ReplayData;
+import pba.models.replay.results.Generation3Results;
+import pba.parser.ReplayParser;
+import pba.service.analyzer.Generation3ResultsAnalyzer;
+
 @Slf4j
-public class Generation3Parser implements ReplayParser<Generation3ReplayResults> {
+@Component
+@RequiredArgsConstructor
+public class Generation3Parser extends ReplayParser<Generation3Results> {
+
+    private final Generation3ResultsAnalyzer generation3ResultsAnalyzer = new Generation3ResultsAnalyzer();
 
     @Override
-    public Generation3ReplayResults parse(Replay replay) {
-        String replayLog = replay.getLog();
+    public Generation3Results parseReplays(List<Replay> replays) {
 
-        List<String> lines = List.of(replayLog.split("\n"));
-        Generation3ActionParser generation3ActionParser = new Generation3ActionParser();
+        List<Generation3ReplayData> results = replays.stream()
+            .map(Replay::getLog)
+            .map(replayLog -> replayLog.split("\n"))
+            .map(lines -> {
+                Generation3ActionParser generation3ActionParser = new Generation3ActionParser();
+                return generation3ActionParser.parseLines(lines);
+            })
+            .toList();
 
-        for(String line: lines) {
-            Generation3Action action = new Generation3Action(line);
-            generation3ActionParser.applyAction(action);
-        }
-
-        return generation3ActionParser.retrieveResults();
+        return generation3ResultsAnalyzer.analyze(results);
     }
-
 }

@@ -1,10 +1,10 @@
 package pba.models;
 
+import java.util.UUID;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.UUID;
+import lombok.ToString;
 
 @Getter
 @Setter
@@ -25,11 +25,11 @@ public class Pokemon {
   private int damageDealt;
   private int knockouts;
 
-  public void takeDamage(int damage){
+  public void takeDamage(int damage) {
     this.currentHealth = this.currentHealth - damage;
   }
 
-  public void dealDamage(int damage){
+  public void dealDamage(int damage) {
     this.damageDealt += damage;
   }
 
@@ -45,5 +45,4 @@ public class Pokemon {
     this.damageDealt = pokemon.damageDealt;
     this.knockouts = pokemon.knockouts;
   }
-
 }

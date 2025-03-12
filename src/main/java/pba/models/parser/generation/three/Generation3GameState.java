@@ -6,13 +6,10 @@ import pba.models.Pair;
 import pba.models.Pokemon;
 import pba.models.parser.generation.GameState;
 
-/**
- * Tracks global state across {@link Generation3Action}'s.
- */
+/** Tracks global state across {@link Generation3Action}'s. */
 @Getter
 @Setter
 public class Generation3GameState extends GameState {
 
-    private Pair<Weather, Pokemon> weatherToPokemon;
-
+  private Pair<Weather, Pokemon> weatherToPokemon;
 }
