@@ -21,6 +21,7 @@
         <spring-boot.version>3.4.3</spring-boot.version>
         <jackson.version>2.18.2</jackson.version>
         <spotify-fmt.version>2.25</spotify-fmt.version>
+        <opencsv.version>5.9</opencsv.version>
         <projectreactor.netty.version>1.2.3</projectreactor.netty.version>
         <lombok.version>1.18.34</lombok.version>
         <maven-dependency-plugin.version>3.8.1</maven-dependency-plugin.version>
@@ -58,14 +59,9 @@
             <version>${lombok.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.fasterxml.jackson.dataformat</groupId>
-            <artifactId>jackson-dataformat-csv</artifactId>
-            <version>${jackson.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>${jackson.version}</version>
+            <groupId>com.opencsv</groupId>
+            <artifactId>opencsv</artifactId>
+            <version>${opencsv.version}</version>
         </dependency>
         <!-- Testing-->
         <dependency>

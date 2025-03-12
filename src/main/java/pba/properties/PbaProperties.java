@@ -1,9 +1,9 @@
 package pba.properties;
 
-import lombok.Getter;
+import lombok.Data;
 import org.springframework.context.annotation.Configuration;
 
-@Getter
+@Data
 @Configuration("pba")
 public class PbaProperties {
 

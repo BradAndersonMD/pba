@@ -23,6 +23,5 @@ public class Generation3ReplayData extends GenerationData {
   private List<Pokemon> trainerOnePokemons;
   private Trainer trainerTwo;
   private List<Pokemon> trainerTwoPokemons;
-  private Trainer winner;
   private LinkedList<Generation3Action> allActions;
 }

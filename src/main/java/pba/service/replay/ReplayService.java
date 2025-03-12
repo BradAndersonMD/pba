@@ -1,12 +1,5 @@
 package pba.service.replay;
 
-import static pba.models.replay.GenerationalFormat.GEN_3_OU;
-
-import java.io.File;
-import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -18,6 +11,10 @@ import pba.service.writer.Generation3ResultsWriter;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
+
+import java.io.File;
+import java.util.List;
+import java.util.function.Function;
 
 @Slf4j
 @Service

@@ -11,5 +11,6 @@ import pba.models.parser.generation.GameState;
 @Setter
 public class Generation3GameState extends GameState {
 
+  private Pair<Hazard, Pokemon> hazardToPokemon;
   private Pair<Weather, Pokemon> weatherToPokemon;
 }

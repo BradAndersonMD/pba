@@ -1,12 +1,5 @@
 package pba.parser.generation;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.Map;
-import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import pba.models.Pair;
 import pba.models.Pokemon;
@@ -14,9 +7,18 @@ import pba.models.StatusEffect;
 import pba.models.Trainer;
 import pba.models.parser.generation.three.Generation3Action;
 import pba.models.parser.generation.three.Generation3GameState;
+import pba.models.parser.generation.three.Hazard;
 import pba.models.parser.generation.three.Weather;
 import pba.models.replay.data.Generation3ReplayData;
 import pba.service.team.PokemonResolverService;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.Map;
+import java.util.Optional;
 
 @Slf4j
 public class Generation3ActionParser implements GenerationActionParser<Generation3ReplayData> {
@@ -106,7 +108,20 @@ public class Generation3ActionParser implements GenerationActionParser<Generatio
       Pokemon pokemon = trainerAndPokemon.value();
 
       if (value.contains("0 fnt")) {
-        pokemon.takeDamage(pokemon.getCurrentHealth()); // Deal remaining HP
+
+        Generation3Action previousMoveAction = getPreviousActionUntil("|move|");
+        String previousValue = previousMoveAction.getValue().split("\\|")[0];
+
+        Pair<Trainer, Pokemon> previousTrainerAndPokemon = retrieveTrainerAndResolvedPokemon(previousValue);
+        Trainer previousTrainer = previousTrainerAndPokemon.key();
+        Pokemon previousPokemon = previousTrainerAndPokemon.value();
+
+        // Deal remaining HP
+        previousPokemon.dealDamage(pokemon.getCurrentHealth());
+        previousPokemon.incrementKnockout();
+        pokemon.takeDamage(pokemon.getCurrentHealth());
+
+        updatePokemon(previousTrainer, previousPokemon);
         updatePokemon(trainer, pokemon);
         return;
       }
@@ -148,6 +163,7 @@ public class Generation3ActionParser implements GenerationActionParser<Generatio
         return;
       }
 
+      // Weather/Hazard/Status Effects
       String parsed = valueSplit[2].substring(6).trim();
 
       // Weather damage
@@ -159,6 +175,17 @@ public class Generation3ActionParser implements GenerationActionParser<Generatio
         weatherPokemon.dealDamage(damageDealt);
         updatePokemon(trainer, pokemon);
         updatePokemon(weatherPokemonTrainer, weatherPokemon);
+        return;
+      }
+
+      Hazard foundHazard = Hazard.get(parsed);
+      if(foundHazard != null) {
+        Pokemon hazardPokemon = gameState.getHazardToPokemon().value();
+        Trainer hazardPokemonTrainer = hazardPokemon.getTrainer();
+
+        hazardPokemon.dealDamage(damageDealt);
+        updatePokemon(trainer, pokemon);
+        updatePokemon(hazardPokemonTrainer, hazardPokemon);
         return;
       }
 
@@ -176,18 +203,41 @@ public class Generation3ActionParser implements GenerationActionParser<Generatio
       }
     }
 
-    if (currentAction.contains("|-weather") && value.contains("[of]")) {
-      Pair<Trainer, Pokemon> weatherTrainerAndPokemon =
-              retrieveTrainerAndResolvedPokemon(valueSplit[2].substring(5));
-      Trainer weatherTrainer = weatherTrainerAndPokemon.key();
-      Pokemon weatherPokemon = weatherTrainerAndPokemon.value();
+    if(currentAction.contains("|move|")) {
 
-      gameState.setWeatherToPokemon(new Pair<>(Weather.get(valueSplit[0]), weatherPokemon));
+      Hazard hazard = Hazard.get(valueSplit[1]);
+      if(hazard != null){
+        Pair<Trainer, Pokemon> hazardTrainerAndPokemon =
+                retrieveTrainerAndResolvedPokemon(valueSplit[0]);
+
+        Trainer hazardTrainer = hazardTrainerAndPokemon.key();
+        Pokemon hazardPokemon = hazardTrainerAndPokemon.value();
+        gameState.setHazardToPokemon(new Pair<>(hazard, hazardPokemon));
+        updatePokemon(hazardTrainer, hazardPokemon);
+      }
+
+      return;
+    }
+
+    if(currentAction.contains("|-sideend|") && value.contains("[from]")) {
+      Hazard hazard = Hazard.get(valueSplit[1]);
+      if(gameState.getHazardToPokemon().key().equals(hazard)){
+        gameState.setHazardToPokemon(null);
+      }
+    }
+
+    if (currentAction.contains("|-weather") && value.contains("[of]")) {
+      Pair<Trainer, Pokemon> hazardTrainerAndPokemon =
+              retrieveTrainerAndResolvedPokemon(valueSplit[2].substring(5));
+      Trainer hazardTrainer = hazardTrainerAndPokemon.key();
+      Pokemon hazardPokemon = hazardTrainerAndPokemon.value();
+
+      gameState.setWeatherToPokemon(new Pair<>(Weather.get(valueSplit[0]), hazardPokemon));
       String unparsedAbility = valueSplit[1];
       String ability = unparsedAbility.substring((unparsedAbility.indexOf(":") + 1)).trim();
 
-      weatherPokemon.setAbility(ability);
-      updatePokemon(weatherTrainer, weatherPokemon);
+      hazardPokemon.setAbility(ability);
+      updatePokemon(hazardTrainer, hazardPokemon);
       return;
     }
 
@@ -219,24 +269,6 @@ public class Generation3ActionParser implements GenerationActionParser<Generatio
       pokemon.setCurrentHealth(health);
       updatePokemon(trainer, pokemon);
       return;
-    }
-
-    if (currentAction.contains("|faint|")) {
-      Pair<Trainer, Pokemon> trainerAndPokemon = retrieveTrainerAndResolvedPokemon(value);
-      Trainer trainer = trainerAndPokemon.key();
-      Pokemon pokemon = trainerAndPokemon.value();
-
-      pokemon.setTotalHealth(0);
-      updatePokemon(trainer, pokemon);
-      return;
-    }
-
-    if (currentAction.contains("|win|")) {
-      Trainer winner =
-              value.contains(replayResultsData.getTrainerOne().getName())
-                      ? replayResultsData.getTrainerOne()
-                      : replayResultsData.getTrainerTwo();
-      replayResultsData.setWinner(winner);
     }
 
   }

@@ -1,31 +1,32 @@
 package pba.models.parser.generation.three;
 
+import lombok.Getter;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import lombok.Getter;
 
 @Getter
 public enum Weather {
-  SANDSTORM("Sandstorm"),
-  SPIKES("Spikes");
 
-  private final String name;
-  private static final Map<String, Weather> ENUM_MAP;
+    SANDSTORM("Sandstorm");
 
-  static {
-    Map<String, Weather> nameToWeather = new HashMap<>();
-    Arrays.stream(Weather.values())
-        .forEach(weather -> nameToWeather.put(weather.getName().toLowerCase(), weather));
-    ENUM_MAP = Collections.unmodifiableMap(nameToWeather);
-  }
+    private final String name;
+    private static final Map<String, Weather> ENUM_MAP;
 
-  Weather(String name) {
-    this.name = name;
-  }
+    static {
+        Map<String, Weather> nameToWeather = new HashMap<>();
+        Arrays.stream(Weather.values())
+                .forEach(hazard -> nameToWeather.put(hazard.getName().toLowerCase(), hazard));
+        ENUM_MAP = Collections.unmodifiableMap(nameToWeather);
+    }
 
-  public static Weather get(String name) {
-    return ENUM_MAP.getOrDefault(name.toLowerCase(), null);
-  }
+    Weather(String name) {
+        this.name = name;
+    }
+
+    public static Weather get(String name) {
+        return ENUM_MAP.getOrDefault(name.toLowerCase(), null);
+    }
 }

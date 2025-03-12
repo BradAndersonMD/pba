@@ -27,7 +27,6 @@ public class Generation3ResultsAnalyzer implements ResultsAnalyzer<Generation3Re
     }
 
     List<PokemonData> pokemonData = trainAndPokemonToData.values().stream().toList();
-    log.info("pokemonData=[{}]", pokemonData);
     return new Generation3Results(pokemonData);
   }
 

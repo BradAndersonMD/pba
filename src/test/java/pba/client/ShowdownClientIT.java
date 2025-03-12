@@ -1,14 +1,15 @@
 package pba.client;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.io.IOException;
-import java.net.URL;
 import org.junit.jupiter.api.Test;
 import pba.models.replay.Replay;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
+
+import java.io.IOException;
+import java.net.URL;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class ShowdownClientIT {
 
