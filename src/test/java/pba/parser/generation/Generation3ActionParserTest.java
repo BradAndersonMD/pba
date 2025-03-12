@@ -1,5 +1,8 @@
 package pba.parser.generation;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.LinkedList;
 import org.junit.jupiter.api.Test;
 import pba.models.Pair;
 import pba.models.Pokemon;
@@ -7,10 +10,6 @@ import pba.models.StatusEffect;
 import pba.models.Trainer;
 import pba.models.parser.generation.three.Generation3Action;
 import pba.models.replay.data.Generation3ReplayData;
-
-import java.util.LinkedList;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 class Generation3ActionParserTest {
 
@@ -334,7 +333,7 @@ class Generation3ActionParserTest {
    */
   private void playGeneration3Actions(Generation3Action... actions) {
     for (Generation3Action action : actions) {
-//      generation3ActionParser.applyAction(action);
+//        generation3ActionParser.applyAction(action);
     }
   }
 }

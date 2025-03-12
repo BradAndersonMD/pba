@@ -1,21 +1,15 @@
 package pba.service.analyzer;
 
-import org.junit.jupiter.api.Test;
-
 import java.util.List;
+import org.junit.jupiter.api.Test;
 
 class Generation3ResultsAnalyzerTest {
 
+  @Test
+  void itShouldAnalyzeResults() {
 
-    @Test
-    void itShouldAnalyzeResults() {
+    Generation3ResultsAnalyzer generation3ResultsAnalyzer = new Generation3ResultsAnalyzer();
 
-        Generation3ResultsAnalyzer generation3ResultsAnalyzer = new Generation3ResultsAnalyzer();
-
-        generation3ResultsAnalyzer.analyze(List.of());
-
-    }
-
-
-
+    generation3ResultsAnalyzer.analyze(List.of());
+  }
 }

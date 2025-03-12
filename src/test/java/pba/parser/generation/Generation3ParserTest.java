@@ -22,7 +22,6 @@ class Generation3ParserTest {
     Generation3Results expected = loadExpected("results.json");
     Generation3Parser generation3Parser = new Generation3Parser();
     Generation3Results actual = generation3Parser.parseReplays(List.of(replay));
-    String s = mapper.writer().writeValueAsString(actual);
     assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
   }
 
@@ -32,7 +31,6 @@ class Generation3ParserTest {
     Generation3Results expected = loadExpected("multipleReplayResults.json");
     Generation3Parser generation3Parser = new Generation3Parser();
     Generation3Results actual = generation3Parser.parseReplays(replays);
-    String s = mapper.writer().writeValueAsString(actual);
     assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
   }
 
@@ -44,15 +42,16 @@ class Generation3ParserTest {
 
   private List<Replay> loadInputs() throws IOException {
     List<Replay> replays = new ArrayList<>();
-    List<String> replayFilenames = List.of(
+    List<String> replayFilenames =
+        List.of(
             "gen3ou-2311036422.json",
             "gen3ou-2312634390.json",
             "gen3ou-2312642550.json",
-            "gen3ou-2312646506.json"
-    );
+            "gen3ou-2312646506.json");
 
-    for(String fileName: replayFilenames) {
-      URL resource = Generation3ParserTest.class.getClassLoader().getResource("parser/input/" + fileName);
+    for (String fileName : replayFilenames) {
+      URL resource =
+          Generation3ParserTest.class.getClassLoader().getResource("parser/input/" + fileName);
       Replay replay = mapper.readValue(resource, Replay.class);
       replays.add(replay);
     }
@@ -62,7 +61,9 @@ class Generation3ParserTest {
 
   private Generation3Results loadExpected(String resultsFileName) throws IOException {
     URL input =
-        Generation3ParserTest.class.getClassLoader().getResource("parser/output/" + resultsFileName);
+        Generation3ParserTest.class
+            .getClassLoader()
+            .getResource("parser/output/" + resultsFileName);
     return mapper.readValue(input, Generation3Results.class);
   }
 }

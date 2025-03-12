@@ -4,6 +4,5 @@ import pba.models.replay.results.ReplayResult;
 
 public interface ResultsWriter<T extends ReplayResult> {
 
-    void write(T results);
-
+  void write(T results);
 }

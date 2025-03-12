@@ -1,12 +1,12 @@
 package pba.properties;
 
 import lombok.Data;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 
 @Data
-@Configuration("pba")
+@ConfigurationPropertiesScan
+@ConfigurationProperties(prefix = "pba.results")
 public class PbaProperties {
-
-    private String resultsOutputDirectory;
-
+  private String outputDirectory;
 }

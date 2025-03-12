@@ -5,6 +5,4 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ReplayResult {
-
-}
+public class ReplayResult {}

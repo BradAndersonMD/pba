@@ -1,3 +1,3 @@
 package pba.models.replay.data;
 
-public class GenerationData { }
+public class GenerationData {}

@@ -1,10 +1,9 @@
 package pba.models.parser.generation.three;
 
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import pba.models.parser.generation.GenerationAction;
-
-import java.util.List;
 
 @Getter
 @AllArgsConstructor
@@ -74,5 +73,4 @@ public class Generation3Action implements GenerationAction {
   public boolean isEligibleAction() {
     return getEligibleActions().stream().anyMatch(this.actionType::contains);
   }
-
 }

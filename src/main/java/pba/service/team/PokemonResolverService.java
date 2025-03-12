@@ -1,11 +1,10 @@
 package pba.service.team;
 
+import java.util.List;
+import java.util.Map;
 import lombok.AllArgsConstructor;
 import pba.models.Pokemon;
 import pba.models.Trainer;
-
-import java.util.List;
-import java.util.Map;
 
 @AllArgsConstructor
 public class PokemonResolverService {

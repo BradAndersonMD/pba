@@ -13,22 +13,20 @@ public class ShowdownClient {
 
   private static final String URL = "https://replay.pokemonshowdown.com/";
 
-    private WebClient webClient;
+  private WebClient webClient;
 
   @PostConstruct
   protected void setWebClient() {
-        webClient = WebClient.builder()
-              .baseUrl(URL)
-              .build();
+    webClient = WebClient.builder().baseUrl(URL).build();
   }
 
   public Mono<Replay> getReplay(String replayId) {
     log.info("Fetching replay [{}]", replayId);
     return webClient
-            .get()
-            .uri(replayId + ".json")
-            .retrieve()
-            .bodyToMono(Replay.class)
-            .doOnError(e -> log.error("Failed to create replay [{}]", replayId));
+        .get()
+        .uri(replayId + ".json")
+        .retrieve()
+        .bodyToMono(Replay.class)
+        .doOnError(e -> log.error("Failed to create replay [{}]", replayId));
   }
 }

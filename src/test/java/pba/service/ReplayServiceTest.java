@@ -1,6 +1,14 @@
 package pba.service;
 
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,15 +22,6 @@ import pba.parser.generation.Generation3Parser;
 import pba.service.replay.ReplayService;
 import pba.service.writer.Generation3ResultsWriter;
 import reactor.core.publisher.Mono;
-
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.util.List;
-
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class ReplayServiceTest {

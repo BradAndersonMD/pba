@@ -1,11 +1,9 @@
 package pba.parser;
 
-import pba.models.replay.Replay;
-import pba.models.replay.results.ReplayResult;
-
 import java.util.List;
+import pba.models.replay.Replay;
 
-public abstract class ReplayParser<T extends ReplayResult> {
+public abstract class ReplayParser {
 
-  public abstract T parseReplays(List<Replay> replay);
+  public abstract void parseReplays(List<Replay> replay);
 }
