@@ -1,0 +1,6 @@
+|player|p1|PlatyPunkBean|baker|
+|player|p2|PBAPoliwraths|barry|
+|switch|p1a: Gengar|Gengar, M|100/100
+|switch|p2a: Swampert|Swampert, F|100/100
+|move|p1a: Gengar|Ice Punch|p2a: Swampert
+|-damage|p2a: Swampert|64/100 brn

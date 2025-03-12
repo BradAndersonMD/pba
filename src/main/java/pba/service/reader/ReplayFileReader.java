@@ -1,4 +1,4 @@
-package pba.service;
+package pba.service.reader;
 
 import java.io.BufferedReader;
 import java.io.File;

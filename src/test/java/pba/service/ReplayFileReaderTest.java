@@ -8,6 +8,7 @@ import java.io.FileReader;
 import java.net.URL;
 import java.util.List;
 import org.junit.jupiter.api.Test;
+import pba.service.reader.ReplayFileReader;
 
 class ReplayFileReaderTest {
 

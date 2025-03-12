@@ -61,6 +61,7 @@ public class Generation3Action implements GenerationAction {
         "|-weather|", // weather affects? linked to upkeep?
         "|move|", // which ability was selected
         "|drag|", // Removes active pokemon and pulls in random one
+        "|-sideend", // Hazard removal
         "|-damage|", // which player, pokemon was damaged
         "|-status|", // tracks status - slp/par/brn/psn
         "|-heal|", // healed

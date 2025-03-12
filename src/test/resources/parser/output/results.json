@@ -6,10 +6,10 @@
       "totalKnockOuts": 0,
       "totalDeaths": 1,
       "totalDamageDealt": 0,
-      "totalDamageTaken": 100,
+      "totalDamageTaken": 118,
       "knockOutsPerGame": 0.0,
       "damageDealtPerGame": 0.0,
-      "damageTakenPerGame": 100.0
+      "damageTakenPerGame": 118.0
     },
     {
       "trainerAndPokemon": "PBAPoliwraths - Salamence",
@@ -17,10 +17,10 @@
       "totalKnockOuts": 1,
       "totalDeaths": 1,
       "totalDamageDealt": 100,
-      "totalDamageTaken": 100,
+      "totalDamageTaken": 118,
       "knockOutsPerGame": 1.0,
       "damageDealtPerGame": 100.0,
-      "damageTakenPerGame": 100.0
+      "damageTakenPerGame": 118.0
     },
     {
       "trainerAndPokemon": "PlatyPunkBean - Zapdos",
@@ -28,10 +28,10 @@
       "totalKnockOuts": 2,
       "totalDeaths": 1,
       "totalDamageDealt": 175,
-      "totalDamageTaken": 100,
+      "totalDamageTaken": 131,
       "knockOutsPerGame": 2.0,
       "damageDealtPerGame": 175.0,
-      "damageTakenPerGame": 100.0
+      "damageTakenPerGame": 131.0
     },
     {
       "trainerAndPokemon": "PlatyPunkBean - Kingdra",
@@ -39,10 +39,10 @@
       "totalKnockOuts": 1,
       "totalDeaths": 0,
       "totalDamageDealt": 106,
-      "totalDamageTaken": 0,
+      "totalDamageTaken": 22,
       "knockOutsPerGame": 1.0,
       "damageDealtPerGame": 106.0,
-      "damageTakenPerGame": 0.0
+      "damageTakenPerGame": 22.0
     },
     {
       "trainerAndPokemon": "PlatyPunkBean - Celebi",
@@ -50,10 +50,10 @@
       "totalKnockOuts": 0,
       "totalDeaths": 0,
       "totalDamageDealt": 0,
-      "totalDamageTaken": 0,
+      "totalDamageTaken": 18,
       "knockOutsPerGame": 0.0,
       "damageDealtPerGame": 0.0,
-      "damageTakenPerGame": 0.0
+      "damageTakenPerGame": 18.0
     },
     {
       "trainerAndPokemon": "PlatyPunkBean - Jynx",
@@ -61,21 +61,21 @@
       "totalKnockOuts": 0,
       "totalDeaths": 0,
       "totalDamageDealt": 88,
-      "totalDamageTaken": 0,
+      "totalDamageTaken": 23,
       "knockOutsPerGame": 0.0,
       "damageDealtPerGame": 88.0,
-      "damageTakenPerGame": 0.0
+      "damageTakenPerGame": 23.0
     },
     {
       "trainerAndPokemon": "PlatyPunkBean - Metagross",
       "totalGamesPlayed": 1,
       "totalKnockOuts": 2,
-      "totalDeaths": 0,
+      "totalDeaths": 1,
       "totalDamageDealt": 137,
-      "totalDamageTaken": 0,
+      "totalDamageTaken": 37,
       "knockOutsPerGame": 2.0,
       "damageDealtPerGame": 137.0,
-      "damageTakenPerGame": 0.0
+      "damageTakenPerGame": 37.0
     },
     {
       "trainerAndPokemon": "PBAPoliwraths - Gengar",
@@ -83,31 +83,31 @@
       "totalKnockOuts": 0,
       "totalDeaths": 1,
       "totalDamageDealt": 25,
-      "totalDamageTaken": 100,
+      "totalDamageTaken": 106,
       "knockOutsPerGame": 0.0,
       "damageDealtPerGame": 25.0,
-      "damageTakenPerGame": 100.0
+      "damageTakenPerGame": 106.0
     },
     {
       "trainerAndPokemon": "PBAPoliwraths - Breloom",
       "totalGamesPlayed": 1,
       "totalKnockOuts": 0,
       "totalDeaths": 1,
-      "totalDamageDealt": 70,
-      "totalDamageTaken": 100,
+      "totalDamageDealt": 58,
+      "totalDamageTaken": 106,
       "knockOutsPerGame": 0.0,
-      "damageDealtPerGame": 70.0,
-      "damageTakenPerGame": 100.0
+      "damageDealtPerGame": 58.0,
+      "damageTakenPerGame": 106.0
     },
     {
       "trainerAndPokemon": "PBAPoliwraths - Skarmory",
       "totalGamesPlayed": 1,
       "totalKnockOuts": 0,
       "totalDeaths": 1,
-      "totalDamageDealt": 64,
+      "totalDamageDealt": 52,
       "totalDamageTaken": 106,
       "knockOutsPerGame": 0.0,
-      "damageDealtPerGame": 64.0,
+      "damageDealtPerGame": 52.0,
       "damageTakenPerGame": 106.0
     },
     {
@@ -115,10 +115,10 @@
       "totalGamesPlayed": 1,
       "totalKnockOuts": 0,
       "totalDeaths": 1,
-      "totalDamageDealt": 175,
+      "totalDamageDealt": 114,
       "totalDamageTaken": 100,
       "knockOutsPerGame": 0.0,
-      "damageDealtPerGame": 175.0,
+      "damageDealtPerGame": 114.0,
       "damageTakenPerGame": 100.0
     },
     {
@@ -127,10 +127,10 @@
       "totalKnockOuts": 1,
       "totalDeaths": 0,
       "totalDamageDealt": 112,
-      "totalDamageTaken": 70,
+      "totalDamageTaken": 82,
       "knockOutsPerGame": 1.0,
       "damageDealtPerGame": 112.0,
-      "damageTakenPerGame": 70.0
+      "damageTakenPerGame": 82.0
     }
   ]
 }

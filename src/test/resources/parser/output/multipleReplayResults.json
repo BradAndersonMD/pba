@@ -6,10 +6,10 @@
       "totalKnockOuts": 0,
       "totalDeaths": 1,
       "totalDamageDealt": 86,
-      "totalDamageTaken": 100,
+      "totalDamageTaken": 126,
       "knockOutsPerGame": 0.0,
       "damageDealtPerGame": 86.0,
-      "damageTakenPerGame": 100.0
+      "damageTakenPerGame": 126.0
     },
     {
       "trainerAndPokemon": "PBAPoliwraths - Porygon2",
@@ -17,10 +17,10 @@
       "totalKnockOuts": 0,
       "totalDeaths": 1,
       "totalDamageDealt": 0,
-      "totalDamageTaken": 100,
+      "totalDamageTaken": 118,
       "knockOutsPerGame": 0.0,
       "damageDealtPerGame": 0.0,
-      "damageTakenPerGame": 100.0
+      "damageTakenPerGame": 118.0
     },
     {
       "trainerAndPokemon": "PBAPoliwraths - Salamence",
@@ -28,10 +28,10 @@
       "totalKnockOuts": 1,
       "totalDeaths": 1,
       "totalDamageDealt": 100,
-      "totalDamageTaken": 100,
+      "totalDamageTaken": 118,
       "knockOutsPerGame": 1.0,
       "damageDealtPerGame": 100.0,
-      "damageTakenPerGame": 100.0
+      "damageTakenPerGame": 118.0
     },
     {
       "trainerAndPokemon": "PlatyPunkBean - Kingdra",
@@ -39,10 +39,10 @@
       "totalKnockOuts": 4,
       "totalDeaths": 0,
       "totalDamageDealt": 357,
-      "totalDamageTaken": 69,
+      "totalDamageTaken": 133,
       "knockOutsPerGame": 2.0,
       "damageDealtPerGame": 178.5,
-      "damageTakenPerGame": 34.5
+      "damageTakenPerGame": 66.5
     },
     {
       "trainerAndPokemon": "PlatyPunkBean - Swampert",
@@ -50,10 +50,10 @@
       "totalKnockOuts": 1,
       "totalDeaths": 1,
       "totalDamageDealt": 100,
-      "totalDamageTaken": 100,
+      "totalDamageTaken": 125,
       "knockOutsPerGame": 1.0,
       "damageDealtPerGame": 100.0,
-      "damageTakenPerGame": 100.0
+      "damageTakenPerGame": 125.0
     },
     {
       "trainerAndPokemon": "PlatyPunkBean - Celebi",
@@ -61,10 +61,10 @@
       "totalKnockOuts": 0,
       "totalDeaths": 1,
       "totalDamageDealt": 47,
-      "totalDamageTaken": 86,
+      "totalDamageTaken": 184,
       "knockOutsPerGame": 0.0,
       "damageDealtPerGame": 15.666666666666666,
-      "damageTakenPerGame": 28.666666666666668
+      "damageTakenPerGame": 61.333333333333336
     },
     {
       "trainerAndPokemon": "PlatyPunkBean - Jynx",
@@ -72,43 +72,43 @@
       "totalKnockOuts": 1,
       "totalDeaths": 0,
       "totalDamageDealt": 188,
-      "totalDamageTaken": 59,
+      "totalDamageTaken": 82,
       "knockOutsPerGame": 0.5,
       "damageDealtPerGame": 94.0,
-      "damageTakenPerGame": 29.5
+      "damageTakenPerGame": 41.0
     },
     {
       "trainerAndPokemon": "PlatyPunkBean - Metagross",
       "totalGamesPlayed": 2,
       "totalKnockOuts": 2,
-      "totalDeaths": 0,
+      "totalDeaths": 2,
       "totalDamageDealt": 192,
-      "totalDamageTaken": 0,
+      "totalDamageTaken": 49,
       "knockOutsPerGame": 1.0,
       "damageDealtPerGame": 96.0,
-      "damageTakenPerGame": 0.0
+      "damageTakenPerGame": 24.5
     },
     {
       "trainerAndPokemon": "PBAPoliwraths - Gengar",
       "totalGamesPlayed": 4,
       "totalKnockOuts": 1,
       "totalDeaths": 4,
-      "totalDamageDealt": 419,
-      "totalDamageTaken": 419,
+      "totalDamageDealt": 395,
+      "totalDamageTaken": 480,
       "knockOutsPerGame": 0.25,
-      "damageDealtPerGame": 104.75,
-      "damageTakenPerGame": 104.75
+      "damageDealtPerGame": 98.75,
+      "damageTakenPerGame": 120.0
     },
     {
       "trainerAndPokemon": "PBAPoliwraths - Breloom",
       "totalGamesPlayed": 1,
       "totalKnockOuts": 0,
       "totalDeaths": 1,
-      "totalDamageDealt": 70,
-      "totalDamageTaken": 100,
+      "totalDamageDealt": 58,
+      "totalDamageTaken": 106,
       "knockOutsPerGame": 0.0,
-      "damageDealtPerGame": 70.0,
-      "damageTakenPerGame": 100.0
+      "damageDealtPerGame": 58.0,
+      "damageTakenPerGame": 106.0
     },
     {
       "trainerAndPokemon": "PlatyPunkBean - Tyranitar",
@@ -116,32 +116,32 @@
       "totalKnockOuts": 2,
       "totalDeaths": 2,
       "totalDamageDealt": 200,
-      "totalDamageTaken": 207,
+      "totalDamageTaken": 219,
       "knockOutsPerGame": 1.0,
       "damageDealtPerGame": 100.0,
-      "damageTakenPerGame": 103.5
+      "damageTakenPerGame": 109.5
     },
     {
       "trainerAndPokemon": "PBAPoliwraths - Skarmory",
       "totalGamesPlayed": 4,
       "totalKnockOuts": 0,
       "totalDeaths": 3,
-      "totalDamageDealt": 252,
-      "totalDamageTaken": 528,
+      "totalDamageDealt": 197,
+      "totalDamageTaken": 564,
       "knockOutsPerGame": 0.0,
-      "damageDealtPerGame": 63.0,
-      "damageTakenPerGame": 132.0
+      "damageDealtPerGame": 49.25,
+      "damageTakenPerGame": 141.0
     },
     {
       "trainerAndPokemon": "PBAPoliwraths - Zapdos",
       "totalGamesPlayed": 3,
       "totalKnockOuts": 2,
       "totalDeaths": 3,
-      "totalDamageDealt": 193,
-      "totalDamageTaken": 300,
+      "totalDamageDealt": 168,
+      "totalDamageTaken": 336,
       "knockOutsPerGame": 0.6666666666666666,
-      "damageDealtPerGame": 64.33333333333333,
-      "damageTakenPerGame": 100.0
+      "damageDealtPerGame": 56.0,
+      "damageTakenPerGame": 112.0
     },
     {
       "trainerAndPokemon": "PlatyPunkBean - Starmie",
@@ -149,10 +149,10 @@
       "totalKnockOuts": 1,
       "totalDeaths": 0,
       "totalDamageDealt": 191,
-      "totalDamageTaken": 68,
+      "totalDamageTaken": 110,
       "knockOutsPerGame": 1.0,
       "damageDealtPerGame": 191.0,
-      "damageTakenPerGame": 68.0
+      "damageTakenPerGame": 110.0
     },
     {
       "trainerAndPokemon": "PlatyPunkBean - Claydol",
@@ -170,22 +170,22 @@
       "totalGamesPlayed": 1,
       "totalKnockOuts": 1,
       "totalDeaths": 0,
-      "totalDamageDealt": 228,
-      "totalDamageTaken": 55,
+      "totalDamageDealt": 191,
+      "totalDamageTaken": 97,
       "knockOutsPerGame": 1.0,
-      "damageDealtPerGame": 228.0,
-      "damageTakenPerGame": 55.0
+      "damageDealtPerGame": 191.0,
+      "damageTakenPerGame": 97.0
     },
     {
       "trainerAndPokemon": "PBAPoliwraths - Jirachi",
       "totalGamesPlayed": 3,
       "totalKnockOuts": 3,
       "totalDeaths": 2,
-      "totalDamageDealt": 439,
-      "totalDamageTaken": 488,
+      "totalDamageDealt": 427,
+      "totalDamageTaken": 516,
       "knockOutsPerGame": 1.0,
-      "damageDealtPerGame": 146.33333333333334,
-      "damageTakenPerGame": 162.66666666666666
+      "damageDealtPerGame": 142.33333333333334,
+      "damageTakenPerGame": 172.0
     },
     {
       "trainerAndPokemon": "PlatyPunkBean - Blissey",
@@ -193,21 +193,21 @@
       "totalKnockOuts": 2,
       "totalDeaths": 1,
       "totalDamageDealt": 262,
-      "totalDamageTaken": 121,
+      "totalDamageTaken": 194,
       "knockOutsPerGame": 2.0,
       "damageDealtPerGame": 262.0,
-      "damageTakenPerGame": 121.0
+      "damageTakenPerGame": 194.0
     },
     {
       "trainerAndPokemon": "PBAPoliwraths - Dugtrio",
       "totalGamesPlayed": 3,
       "totalKnockOuts": 2,
       "totalDeaths": 2,
-      "totalDamageDealt": 298,
-      "totalDamageTaken": 200,
+      "totalDamageDealt": 274,
+      "totalDamageTaken": 216,
       "knockOutsPerGame": 0.6666666666666666,
-      "damageDealtPerGame": 99.33333333333333,
-      "damageTakenPerGame": 66.66666666666667
+      "damageDealtPerGame": 91.33333333333333,
+      "damageTakenPerGame": 72.0
     },
     {
       "trainerAndPokemon": "PlatyPunkBean - Skarmory",
@@ -215,10 +215,10 @@
       "totalKnockOuts": 0,
       "totalDeaths": 0,
       "totalDamageDealt": 80,
-      "totalDamageTaken": 35,
+      "totalDamageTaken": 59,
       "knockOutsPerGame": 0.0,
       "damageDealtPerGame": 80.0,
-      "damageTakenPerGame": 35.0
+      "damageTakenPerGame": 59.0
     },
     {
       "trainerAndPokemon": "PlatyPunkBean - Zapdos",
@@ -226,31 +226,31 @@
       "totalKnockOuts": 2,
       "totalDeaths": 3,
       "totalDamageDealt": 266,
-      "totalDamageTaken": 312,
+      "totalDamageTaken": 361,
       "knockOutsPerGame": 0.6666666666666666,
       "damageDealtPerGame": 88.66666666666667,
-      "damageTakenPerGame": 104.0
+      "damageTakenPerGame": 120.33333333333333
     },
     {
       "trainerAndPokemon": "PlatyPunkBean - Suicune",
       "totalGamesPlayed": 1,
       "totalKnockOuts": 0,
       "totalDeaths": 1,
-      "totalDamageDealt": 113,
-      "totalDamageTaken": 82,
+      "totalDamageDealt": 88,
+      "totalDamageTaken": 118,
       "knockOutsPerGame": 0.0,
-      "damageDealtPerGame": 113.0,
-      "damageTakenPerGame": 82.0
+      "damageDealtPerGame": 88.0,
+      "damageTakenPerGame": 118.0
     },
     {
       "trainerAndPokemon": "PBAPoliwraths - Tyranitar",
       "totalGamesPlayed": 4,
       "totalKnockOuts": 2,
       "totalDeaths": 3,
-      "totalDamageDealt": 807,
+      "totalDamageDealt": 630,
       "totalDamageTaken": 325,
       "knockOutsPerGame": 0.5,
-      "damageDealtPerGame": 201.75,
+      "damageDealtPerGame": 157.5,
       "damageTakenPerGame": 81.25
     },
     {
@@ -259,10 +259,10 @@
       "totalKnockOuts": 3,
       "totalDeaths": 0,
       "totalDamageDealt": 275,
-      "totalDamageTaken": 70,
+      "totalDamageTaken": 106,
       "knockOutsPerGame": 1.5,
       "damageDealtPerGame": 137.5,
-      "damageTakenPerGame": 35.0
+      "damageTakenPerGame": 53.0
     }
   ]
 }

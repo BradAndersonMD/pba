@@ -1,0 +1,6 @@
+|player|p1|PlatyPunkBean|baker|p1|PlatyPunkBean|baker|
+|player|p2|PBAPoliwraths|barry|p2|PBAPoliwraths|barry|
+|switch|p1a: Gengar|Gengar, M|100/100
+|switch|p2a: Swampert|Swampert, F|100/100
+|-weather|Sandstorm|[from] ability: Sand Stream|[of] p1a: Gengar
+|-damage|p2a: Swampert|94/100|[from] Sandstorm

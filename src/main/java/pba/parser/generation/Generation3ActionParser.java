@@ -179,6 +179,8 @@ public class Generation3ActionParser implements GenerationActionParser<Generatio
         Trainer weatherPokemonTrainer = weatherPokemon.getTrainer();
 
         weatherPokemon.dealDamage(damageDealt);
+        pokemon.takeDamage(damageDealt);
+
         updatePokemon(trainer, pokemon);
         updatePokemon(weatherPokemonTrainer, weatherPokemon);
         return;
@@ -190,6 +192,8 @@ public class Generation3ActionParser implements GenerationActionParser<Generatio
         Trainer hazardPokemonTrainer = hazardPokemon.getTrainer();
 
         hazardPokemon.dealDamage(damageDealt);
+        pokemon.takeDamage(damageDealt);
+
         updatePokemon(trainer, pokemon);
         updatePokemon(hazardPokemonTrainer, hazardPokemon);
         return;
@@ -203,6 +207,8 @@ public class Generation3ActionParser implements GenerationActionParser<Generatio
         Trainer statusEffectPokemonTrainer = statusEffectPokemon.getTrainer();
 
         statusEffectPokemon.dealDamage(damageDealt);
+        pokemon.takeDamage(damageDealt);
+
         updatePokemon(trainer, pokemon);
         updatePokemon(statusEffectPokemonTrainer, statusEffectPokemon);
         return;

@@ -10,7 +10,8 @@ import org.springframework.stereotype.Service;
 import pba.client.ShowdownClient;
 import pba.models.replay.Replay;
 import pba.parser.generation.Generation3Parser;
-import pba.service.ReplayFileReader;
+import pba.service.reader.ReplayFileReader;
+import pba.service.writer.Generation3ResultsWriter;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -22,6 +23,7 @@ public class ReplayService {
     private final ShowdownClient showdownClient;
     private final ReplayFileReader replayFileReader;
     private final Generation3Parser replayParser;
+    private final Generation3ResultsWriter resultsWriter;
 
     public void processFile(File replaysFile) {
         List<String> replayIds = replayFileReader.read(replaysFile);
@@ -29,7 +31,8 @@ public class ReplayService {
         Flux.fromIterable(showdownReplays)
             .flatMap(Function.identity())
             .collectList()
-            .doOnNext(replayParser::parseReplays)
+            .map(replayParser::parseReplays)
+            .doOnNext(resultsWriter::write)
             .doOnError(err -> log.error("Failed to parse replays", err))
             .block();
 

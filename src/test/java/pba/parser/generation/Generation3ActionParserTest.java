@@ -2,7 +2,14 @@ package pba.parser.generation;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.net.URL;
 import java.util.LinkedList;
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import pba.models.Pair;
 import pba.models.Pokemon;
@@ -13,22 +20,16 @@ import pba.models.replay.data.Generation3ReplayData;
 
 class Generation3ActionParserTest {
 
-  Generation3ActionParser generation3ActionParser = new Generation3ActionParser();
-
   @Test
-  void itShouldParse_Player() {
+  void itShouldParse_Player() throws IOException {
+    Generation3ActionParser generation3ActionParser = new Generation3ActionParser();
     // Setup
-    Generation3Action playerOneAction =
-        new Generation3Action("|player|p1|PBAPoliwraths|baker|", "p1|PBAPoliwraths|baker|");
-    Generation3Action playerTwoAction =
-        new Generation3Action("|player|p2|PlatyPunkBean|barry|", "p2|PlatyPunkBean|barry|");
+    List<String> lines = readInputCreateApplyActions("playerLog.log");
 
     // Test
-    playGeneration3Actions(playerOneAction, playerTwoAction);
+    Generation3ReplayData generation3ReplayData = generation3ActionParser.parseLines(lines.toArray(new String[0]));
 
     // Verify
-    Generation3ReplayData generation3ReplayData = generation3ActionParser.parseLines(new String[0]);
-
     LinkedList<Generation3Action> allActions = generation3ReplayData.getAllActions();
     Trainer trainerOne = generation3ReplayData.getTrainerOne();
     Trainer trainerTwo = generation3ReplayData.getTrainerTwo();
@@ -39,23 +40,16 @@ class Generation3ActionParserTest {
   }
 
   @Test
-  void itShouldParse_switch() {
+  void itShouldParse_switch() throws IOException {
+    Generation3ActionParser generation3ActionParser = new Generation3ActionParser();
+
     // Setup
-    Generation3Action playerOneAction =
-        new Generation3Action("|player|p1|PBAPoliwraths|baker|", "p1|PBAPoliwraths|baker|");
-    Generation3Action playerTwoAction =
-        new Generation3Action("|player|p2|PlatyPunkBean|barry|", "p2|PlatyPunkBean|barry|");
-    Generation3Action switchOneAction =
-        new Generation3Action("|switch|", "p1a: JynxNick|Jynx, F|100/100");
-    Generation3Action switchTwoAction =
-        new Generation3Action("|switch|", "p2a: ZapadosNick|Zapados|100/100");
+    List<String> lines = readInputCreateApplyActions("switchLog.log");
 
     // Test
-    playGeneration3Actions(playerOneAction, playerTwoAction, switchOneAction, switchTwoAction);
+    Generation3ReplayData generation3ReplayData = generation3ActionParser.parseLines(lines.toArray(new String[0]));
 
     // Verify
-    Generation3ReplayData generation3ReplayData = generation3ActionParser.parseLines(new String[0]);
-
     LinkedList<Generation3Action> allActions = generation3ReplayData.getAllActions();
     Trainer trainerOne = generation3ReplayData.getTrainerOne();
     Trainer trainerTwo = generation3ReplayData.getTrainerTwo();
@@ -85,31 +79,14 @@ class Generation3ActionParserTest {
   }
 
   @Test
-  void itShouldParse_Damage() {
+  void itShouldParse_Damage() throws IOException {
+    Generation3ActionParser generation3ActionParser = new Generation3ActionParser();
+
     // Setup
-    Generation3Action playerOneAction =
-        new Generation3Action("|player|p1|PlatyPunkBean|baker|", "p1|PlatyPunkBean|baker|");
-    Generation3Action playerTwoAction =
-        new Generation3Action("|player|p2|PBAPoliwraths|barry|", "p2|PBAPoliwraths|barry|");
-    Generation3Action switchOneAction =
-        new Generation3Action("|switch|", "p1a: Gengar|Gengar, M|100/100");
-    Generation3Action switchTwoAction =
-        new Generation3Action("|switch|", "p2a: Swampert|Swampert, F|100/100");
-    Generation3Action moveAction =
-        new Generation3Action("|move|", "p1a: Gengar|Ice Punch|p2a: Swampert");
-    Generation3Action damageAction = new Generation3Action("|-damage|", "p2a: Swampert|64/100 brn");
+    List<String> lines = readInputCreateApplyActions("damageLog.log");
 
     // Test
-    playGeneration3Actions(
-        playerOneAction,
-        playerTwoAction,
-        switchOneAction,
-        switchTwoAction,
-        moveAction,
-        damageAction);
-
-    // Verify
-    Generation3ReplayData generation3ReplayData = generation3ActionParser.parseLines(new String[0]);
+    Generation3ReplayData generation3ReplayData = generation3ActionParser.parseLines(lines.toArray(new String[0]));
 
     LinkedList<Generation3Action> allActions = generation3ReplayData.getAllActions();
     Trainer trainerOne = generation3ReplayData.getTrainerOne();
@@ -128,6 +105,7 @@ class Generation3ActionParserTest {
     expectedPlayerTwoPokemon.setNickname("Swampert");
     expectedPlayerTwoPokemon.setTrainer(trainerTwo);
     expectedPlayerTwoPokemon.setCurrentHealth(64);
+    expectedPlayerTwoPokemon.setDamageTaken(36);
 
     assertThat(trainerOne.getName()).isEqualTo("PlatyPunkBean");
     assertThat(trainerTwo.getName()).isEqualTo("PBAPoliwraths");
@@ -143,34 +121,14 @@ class Generation3ActionParserTest {
   }
 
   @Test
-  void itShouldParse_Heal() {
+  void itShouldParse_Heal() throws IOException {
+    Generation3ActionParser generation3ActionParser = new Generation3ActionParser();
+
     // Setup
-    Generation3Action playerOneAction =
-        new Generation3Action("|player|p1|PlatyPunkBean|baker|", "p1|PlatyPunkBean|baker|");
-    Generation3Action playerTwoAction =
-        new Generation3Action("|player|p2|PBAPoliwraths|barry|", "p2|PBAPoliwraths|barry|");
-    Generation3Action switchOneAction =
-        new Generation3Action("|switch|", "p1a: Gengar|Gengar, M|100/100");
-    Generation3Action switchTwoAction =
-        new Generation3Action("|switch|", "p2a: Swampert|Swampert, F|100/100");
-    Generation3Action moveAction =
-        new Generation3Action("|move|", "p1a: Gengar|Ice Punch|p2a: Swampert");
-    Generation3Action damageAction = new Generation3Action("|-damage|", "p2a: Swampert|64/100 brn");
-    Generation3Action healAction =
-        new Generation3Action("|-heal|", "p2a: Swampert|71/100|[from] item: Leftovers");
+    List<String> lines = readInputCreateApplyActions("healLog.log");
 
     // Test
-    playGeneration3Actions(
-        playerOneAction,
-        playerTwoAction,
-        switchOneAction,
-        switchTwoAction,
-        moveAction,
-        damageAction,
-        healAction);
-
-    // Verify
-    Generation3ReplayData generation3ReplayData = generation3ActionParser.parseLines(new String[0]);
+    Generation3ReplayData generation3ReplayData = generation3ActionParser.parseLines(lines.toArray(new String[0]));
 
     LinkedList<Generation3Action> allActions = generation3ReplayData.getAllActions();
     Trainer trainerOne = generation3ReplayData.getTrainerOne();
@@ -188,6 +146,7 @@ class Generation3ActionParserTest {
     expectedPlayerTwoPokemon.setNickname("Swampert");
     expectedPlayerTwoPokemon.setTrainer(trainerTwo);
     expectedPlayerTwoPokemon.setCurrentHealth(71);
+    expectedPlayerTwoPokemon.setDamageTaken(36);
 
     assertThat(trainerOne.getName()).isEqualTo("PlatyPunkBean");
     assertThat(trainerTwo.getName()).isEqualTo("PBAPoliwraths");
@@ -203,34 +162,16 @@ class Generation3ActionParserTest {
   }
 
   @Test
-  void itShouldParse_Weather() {
+  void itShouldParse_Weather() throws IOException {
+    Generation3ActionParser generation3ActionParser = new Generation3ActionParser();
+
     // Setup
-    Generation3Action playerOneAction =
-        new Generation3Action("|player|p1|PlatyPunkBean|baker|", "p1|PlatyPunkBean|baker|");
-    Generation3Action playerTwoAction =
-        new Generation3Action("|player|p2|PBAPoliwraths|barry|", "p2|PBAPoliwraths|barry|");
-    Generation3Action switchOneAction =
-        new Generation3Action("|switch|", "p1a: Gengar|Gengar, M|100/100");
-    Generation3Action switchTwoAction =
-        new Generation3Action("|switch|", "p2a: Swampert|Swampert, F|100/100");
-    Generation3Action weatherAction =
-        new Generation3Action(
-            "|-weather|", "Sandstorm|[from] ability: Sand Stream|[of] p1a: Gengar");
-    Generation3Action damageAction =
-        new Generation3Action("|-damage|", "p2a: Swampert|94/100|[from] Sandstorm");
+    List<String> lines = readInputCreateApplyActions("weatherLog.log");
 
     // Test
-    playGeneration3Actions(
-        playerOneAction,
-        playerTwoAction,
-        switchOneAction,
-        switchTwoAction,
-        weatherAction,
-        damageAction);
+    Generation3ReplayData generation3ReplayData = generation3ActionParser.parseLines(lines.toArray(new String[0]));
 
     // Verify
-    Generation3ReplayData generation3ReplayData = generation3ActionParser.parseLines(new String[0]);
-
     LinkedList<Generation3Action> allActions = generation3ReplayData.getAllActions();
     Trainer trainerOne = generation3ReplayData.getTrainerOne();
     Trainer trainerTwo = generation3ReplayData.getTrainerTwo();
@@ -249,6 +190,7 @@ class Generation3ActionParserTest {
     expectedPlayerTwoPokemon.setNickname("Swampert");
     expectedPlayerTwoPokemon.setTrainer(trainerTwo);
     expectedPlayerTwoPokemon.setCurrentHealth(94);
+    expectedPlayerTwoPokemon.setDamageTaken(6);
 
     assertThat(trainerOne.getName()).isEqualTo("PlatyPunkBean");
     assertThat(trainerTwo.getName()).isEqualTo("PBAPoliwraths");
@@ -264,34 +206,15 @@ class Generation3ActionParserTest {
   }
 
   @Test
-  void itShouldParse_StatusEffect() {
+  void itShouldParse_StatusEffect() throws IOException {
+    Generation3ActionParser generation3ActionParser = new Generation3ActionParser();
+
     // Setup
-    Generation3Action playerOneAction =
-        new Generation3Action("|player|p1|PlatyPunkBean|baker|", "p1|PlatyPunkBean|baker|");
-    Generation3Action playerTwoAction =
-        new Generation3Action("|player|p2|PBAPoliwraths|barry|", "p2|PBAPoliwraths|barry|");
-    Generation3Action switchOneAction =
-        new Generation3Action("|switch|", "p1a: Gengar|Gengar, M|100/100");
-    Generation3Action switchTwoAction =
-        new Generation3Action("|switch|", "p2a: Swampert|Swampert, F|100/100");
-    Generation3Action moveAction =
-        new Generation3Action("|move|", "p1a: Gengar|Will-O-Wisp|p2a: Swampert");
-    Generation3Action statusAction = new Generation3Action("|-status|", "p2a: Swampert|brn");
-    Generation3Action damageAction =
-        new Generation3Action("|-damage|", "p2a: Swampert|88/100|[from] brn");
+    List<String> lines = readInputCreateApplyActions("statusEffectLog.log");
 
     // Test
-    playGeneration3Actions(
-        playerOneAction,
-        playerTwoAction,
-        switchOneAction,
-        switchTwoAction,
-        moveAction,
-        statusAction,
-        damageAction);
+    Generation3ReplayData generation3ReplayData = generation3ActionParser.parseLines(lines.toArray(new String[0]));
 
-    // Verify
-    Generation3ReplayData generation3ReplayData = generation3ActionParser.parseLines(new String[0]);
 
     LinkedList<Generation3Action> allActions = generation3ReplayData.getAllActions();
     Trainer trainerOne = generation3ReplayData.getTrainerOne();
@@ -310,6 +233,7 @@ class Generation3ActionParserTest {
     expectedPlayerTwoPokemon.setNickname("Swampert");
     expectedPlayerTwoPokemon.setTrainer(trainerTwo);
     expectedPlayerTwoPokemon.setCurrentHealth(88);
+    expectedPlayerTwoPokemon.setDamageTaken(12);
     expectedPlayerTwoPokemon.setStatusEffectAndPokemon(
         new Pair<>(StatusEffect.BURN, generation3ReplayData.getTrainerOnePokemons().get(0)));
 
@@ -326,14 +250,17 @@ class Generation3ActionParserTest {
         .isEqualTo(expectedPlayerTwoPokemon);
   }
 
-  /**
-   * Action order matters here
-   *
-   * @param actions the actions to apply
-   */
-  private void playGeneration3Actions(Generation3Action... actions) {
-    for (Generation3Action action : actions) {
-//        generation3ActionParser.applyAction(action);
+  private List<String> readInputCreateApplyActions(String fileName) throws IOException {
+    URL resource = Generation3ActionParserTest.class.getClassLoader().getResource("parser/input/" + fileName);
+    File file = new File(resource.getFile());
+
+    List<String> list;
+    try (FileReader fileReader = new FileReader(file);
+         BufferedReader bufferedReader = new BufferedReader(fileReader)) {
+      list = bufferedReader.lines().toList();
     }
+
+    return list;
   }
+
 }
