@@ -4,5 +4,4 @@ spring:
 
 pba:
   results:
-    # desired output directory
-    output-directory: C:\Users\brada\Documents\PBA\Output
+    output-directory: # desired output directory

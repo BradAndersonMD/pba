@@ -12,7 +12,6 @@ import pba.models.Pair;
 import pba.models.Pokemon;
 import pba.models.StatusEffect;
 import pba.models.Trainer;
-import pba.models.parser.generation.GameState;
 import pba.models.parser.generation.three.Generation3Action;
 import pba.models.parser.generation.three.Generation3GameState;
 import pba.models.parser.generation.three.Hazard;
