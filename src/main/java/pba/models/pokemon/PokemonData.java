@@ -3,7 +3,9 @@ package pba.models.pokemon;
 import com.opencsv.bean.CsvBindByName;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import pba.models.Pokemon;
+import pba.utils.PokemonDataUtils;
+
+import java.text.DecimalFormat;
 
 @Getter
 @NoArgsConstructor
@@ -12,28 +14,28 @@ public class PokemonData {
   @CsvBindByName(column = "Trainer and Pokemon", required = true)
   private String trainerAndPokemon;
 
-  @CsvBindByName(column = "Total games played", required = true)
+  @CsvBindByName(column = "Games Played", required = true)
   private int totalGamesPlayed = 0;
 
-  @CsvBindByName(column = "Total knockouts", required = true)
+  @CsvBindByName(column = "Knockouts", required = true)
   private int totalKnockOuts = 0;
 
-  @CsvBindByName(column = "Total deaths", required = true)
+  @CsvBindByName(column = "Deaths", required = true)
   private int totalDeaths = 0;
 
-  @CsvBindByName(column = "Total damage dealt", required = true)
+  @CsvBindByName(column = "Total dmg dealt", required = true)
   private int totalDamageDealt = 0;
 
-  @CsvBindByName(column = "Total damage taken", required = true)
+  @CsvBindByName(column = "Total dmg taken", required = true)
   private int totalDamageTaken = 0;
 
-  @CsvBindByName(column = "knock outs per game", required = true)
+  @CsvBindByName(column = "KO's per game", required = true)
   private double knockOutsPerGame = 0.0;
 
-  @CsvBindByName(column = "damage dealt per game", required = true)
+  @CsvBindByName(column = "dmg dealt per game", required = true)
   private double damageDealtPerGame = 0.0;
 
-  @CsvBindByName(column = "damage taken per game", required = true)
+  @CsvBindByName(column = "dmg taken per game", required = true)
   private double damageTakenPerGame = 0.0;
 
   public PokemonData(String trainerAndPokemon) {
@@ -46,8 +48,16 @@ public class PokemonData {
     this.totalDamageDealt += pokemon.getDamageDealt();
     this.totalDamageTaken += pokemon.getDamageTaken();
     this.totalDeaths += (pokemon.getCurrentHealth() == 0) ? 1 : 0;
-    this.knockOutsPerGame = ((double) totalKnockOuts / totalGamesPlayed);
-    this.damageDealtPerGame = ((double) totalDamageDealt / totalGamesPlayed);
-    this.damageTakenPerGame = ((double) totalDamageTaken / totalGamesPlayed);
+    this.knockOutsPerGame = Math.floor(((double) totalKnockOuts / totalGamesPlayed) * 100 / 100);
+    this.damageDealtPerGame = Math.floor(((double) totalDamageDealt / totalGamesPlayed) * 100 / 100);
+    this.damageTakenPerGame = Math.floor(((double) totalDamageTaken / totalGamesPlayed) * 100 / 100);
+  }
+
+  public PokemonData calculatePerGameStats() {
+    DecimalFormat df = PokemonDataUtils.getDecimalFormatter();
+    this.knockOutsPerGame = Double.parseDouble(df.format((double) totalKnockOuts / totalGamesPlayed));
+    this.damageDealtPerGame = Double.parseDouble(df.format((double) totalDamageDealt / totalGamesPlayed));
+    this.damageTakenPerGame = Double.parseDouble(df.format((double) totalDamageTaken / totalGamesPlayed));
+    return this;
   }
 }

@@ -3,8 +3,8 @@ package pba.service.team;
 import java.util.List;
 import java.util.Map;
 import lombok.AllArgsConstructor;
-import pba.models.Pokemon;
-import pba.models.Trainer;
+import pba.models.pokemon.Pokemon;
+import pba.models.pokemon.Trainer;
 
 @AllArgsConstructor
 public class PokemonResolverService {

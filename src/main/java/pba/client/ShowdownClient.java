@@ -20,13 +20,22 @@ public class ShowdownClient {
     webClient = WebClient.builder().baseUrl(URL).build();
   }
 
-  public Mono<Replay> getReplay(String replayId) {
-    log.info("Fetching replay [{}]", replayId);
+  public Mono<Replay> getReplay(String replayUrl) {
+    log.info("Fetching replay [{}]", replayUrl);
+    String replayId = convertUrl(replayUrl);
     return webClient
         .get()
         .uri(replayId + ".json")
         .retrieve()
         .bodyToMono(Replay.class)
-        .doOnError(e -> log.error("Failed to create replay [{}]", replayId));
+        .doOnError(e -> log.error("Failed to create replay [{}]", replayUrl));
+  }
+
+  private String convertUrl(String url) {
+    String replayId = url.substring(url.lastIndexOf("/") + 1);
+    if (replayId.contains("battle-")) {
+      return replayId.substring(replayId.indexOf("-") + 1);
+    }
+    return replayId;
   }
 }

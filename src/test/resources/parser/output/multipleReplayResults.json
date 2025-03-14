@@ -63,8 +63,8 @@
       "totalDamageDealt": 47,
       "totalDamageTaken": 184,
       "knockOutsPerGame": 0.0,
-      "damageDealtPerGame": 15.666666666666666,
-      "damageTakenPerGame": 61.333333333333336
+      "damageDealtPerGame": 15.66,
+      "damageTakenPerGame": 61.33
     },
     {
       "trainerAndPokemon": "PlatyPunkBean - Jynx",
@@ -139,7 +139,7 @@
       "totalDeaths": 3,
       "totalDamageDealt": 168,
       "totalDamageTaken": 336,
-      "knockOutsPerGame": 0.6666666666666666,
+      "knockOutsPerGame": 0.66,
       "damageDealtPerGame": 56.0,
       "damageTakenPerGame": 112.0
     },
@@ -184,7 +184,7 @@
       "totalDamageDealt": 427,
       "totalDamageTaken": 516,
       "knockOutsPerGame": 1.0,
-      "damageDealtPerGame": 142.33333333333334,
+      "damageDealtPerGame": 142.33,
       "damageTakenPerGame": 172.0
     },
     {
@@ -205,8 +205,8 @@
       "totalDeaths": 2,
       "totalDamageDealt": 274,
       "totalDamageTaken": 216,
-      "knockOutsPerGame": 0.6666666666666666,
-      "damageDealtPerGame": 91.33333333333333,
+      "knockOutsPerGame": 0.66,
+      "damageDealtPerGame": 91.33,
       "damageTakenPerGame": 72.0
     },
     {
@@ -227,9 +227,9 @@
       "totalDeaths": 3,
       "totalDamageDealt": 266,
       "totalDamageTaken": 361,
-      "knockOutsPerGame": 0.6666666666666666,
-      "damageDealtPerGame": 88.66666666666667,
-      "damageTakenPerGame": 120.33333333333333
+      "knockOutsPerGame": 0.66,
+      "damageDealtPerGame": 88.66,
+      "damageTakenPerGame": 120.33
     },
     {
       "trainerAndPokemon": "PlatyPunkBean - Suicune",
@@ -264,5 +264,6 @@
       "damageDealtPerGame": 137.5,
       "damageTakenPerGame": 53.0
     }
-  ]
+  ],
+  "trainers": []
 }

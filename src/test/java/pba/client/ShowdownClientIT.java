@@ -32,7 +32,7 @@ class ShowdownClientIT {
     URL expected =
         ShowdownClientIT.class
             .getClassLoader()
-            .getResource("replays/gen-3-ou/gen3ou-2311036422.json");
+            .getResource("replays/gen-3-ou/replayInput.json");
     return mapper.readValue(expected, Replay.class);
   }
 }

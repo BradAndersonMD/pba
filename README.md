@@ -1,7 +1,6 @@
 # Pokémon Showdown Replay Analyzer
 
 # TODO:
-### Web Server/Hosting Raspberry Pi?
 ### Spring Profiles
 
 ### Deficiencies:

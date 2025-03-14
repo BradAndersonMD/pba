@@ -1,4 +1,4 @@
-package pba.models;
+package pba.models.parser.generation.three;
 
 import java.util.Arrays;
 import java.util.Collections;

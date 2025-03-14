@@ -1,4 +1,4 @@
-package pba.models;
+package pba.models.pokemon;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -5,8 +5,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import pba.models.Pokemon;
-import pba.models.Trainer;
+import pba.models.pokemon.Pokemon;
+import pba.models.pokemon.Trainer;
 import pba.models.parser.generation.three.Generation3Action;
 
 import java.util.ArrayList;

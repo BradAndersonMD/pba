@@ -12,9 +12,9 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import pba.models.Pair;
-import pba.models.Pokemon;
-import pba.models.StatusEffect;
-import pba.models.Trainer;
+import pba.models.pokemon.Pokemon;
+import pba.models.parser.generation.three.StatusEffect;
+import pba.models.pokemon.Trainer;
 import pba.models.parser.generation.three.Generation3Action;
 import pba.models.replay.data.Generation3ReplayData;
 

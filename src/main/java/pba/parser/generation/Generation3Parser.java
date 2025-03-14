@@ -12,14 +12,12 @@ import pba.service.analyzer.Generation3ResultsAnalyzer;
 
 @Slf4j
 @Component
-@RequiredArgsConstructor
 public class Generation3Parser extends ReplayParser<Generation3Results> {
-
-  private final Generation3ResultsAnalyzer generation3ResultsAnalyzer =
-      new Generation3ResultsAnalyzer();
 
   @Override
   public Generation3Results parseReplays(List<Replay> replays) {
+    Generation3ResultsAnalyzer generation3ResultsAnalyzer = new Generation3ResultsAnalyzer();
+
     List<Generation3ReplayData> replayData =
         replays.stream()
             .map(
