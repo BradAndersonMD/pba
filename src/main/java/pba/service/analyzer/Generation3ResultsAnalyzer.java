@@ -7,7 +7,7 @@ import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import pba.models.pokemon.Pokemon;
-import pba.models.pokemon.PokemonData;
+import pba.models.replay.results.ResultsData;
 import pba.models.replay.data.Generation3ReplayData;
 import pba.models.replay.results.Generation3Results;
 
@@ -16,8 +16,7 @@ import pba.models.replay.results.Generation3Results;
 public class Generation3ResultsAnalyzer
     implements ResultsAnalyzer<Generation3ReplayData, Generation3Results> {
 
-  private final Map<String, PokemonData> trainAndPokemonToData = new HashMap<>();
-
+  private final Map<String, ResultsData> trainAndPokemonToData = new HashMap<>();
   @Override
   public Generation3Results analyze(List<Generation3ReplayData> replayResults) {
     log.info("Analyzing [{}] replay results", replayResults.size());
@@ -28,8 +27,8 @@ public class Generation3ResultsAnalyzer
     }
 
     // Calculate final per game stats
-    List<PokemonData> pokemonData = trainAndPokemonToData.values().stream().map(PokemonData::calculatePerGameStats).toList();
-    return new Generation3Results(pokemonData, new ArrayList<>());
+    List<ResultsData> resultsData = trainAndPokemonToData.values().stream().map(ResultsData::calculatePerGameStats).toList();
+    return new Generation3Results(resultsData);
   }
 
   /**
@@ -41,10 +40,10 @@ public class Generation3ResultsAnalyzer
 
     for (Pokemon pokemon : pokemons) {
       String trainerAndPokemon = pokemon.getTrainer().getName() + " - " + pokemon.getName();
-      PokemonData pokemonDataToUpdate =
-          trainAndPokemonToData.getOrDefault(trainerAndPokemon, new PokemonData(trainerAndPokemon));
-      pokemonDataToUpdate.update(pokemon);
-      trainAndPokemonToData.put(trainerAndPokemon, pokemonDataToUpdate);
+      ResultsData resultsDataToUpdate =
+          trainAndPokemonToData.getOrDefault(trainerAndPokemon, new ResultsData(pokemon));
+      resultsDataToUpdate.update(pokemon);
+      trainAndPokemonToData.put(trainerAndPokemon, resultsDataToUpdate);
     }
   }
 }
