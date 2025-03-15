@@ -1,16 +1,15 @@
 package pba.parser.generation;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.Test;
-import pba.models.replay.Replay;
-import pba.models.replay.results.Generation3Results;
+import static org.assertj.core.api.Assertions.assertThat;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.Test;
+import pba.models.replay.Replay;
+import pba.models.replay.results.Generation3Results;
 
 class Generation3ParserTest {
 

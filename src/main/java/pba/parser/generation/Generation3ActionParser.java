@@ -9,13 +9,13 @@ import java.util.Map;
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import pba.models.Pair;
-import pba.models.pokemon.Pokemon;
-import pba.models.parser.generation.three.StatusEffect;
-import pba.models.pokemon.Trainer;
 import pba.models.parser.generation.three.Generation3Action;
 import pba.models.parser.generation.three.Generation3GameState;
 import pba.models.parser.generation.three.Hazard;
+import pba.models.parser.generation.three.StatusEffect;
 import pba.models.parser.generation.three.Weather;
+import pba.models.pokemon.Pokemon;
+import pba.models.pokemon.Trainer;
 import pba.models.replay.data.Generation3ReplayData;
 import pba.service.team.PokemonResolverService;
 
@@ -39,7 +39,7 @@ public class Generation3ActionParser implements GenerationActionParser<Generatio
   public Generation3ReplayData parseLines(String[] lines) {
 
     for (String line : lines) {
-      if(replayResultsData.isHasWinner()) {
+      if (replayResultsData.isHasWinner()) {
         break;
       }
       Generation3Action action = new Generation3Action(line);
@@ -47,7 +47,6 @@ public class Generation3ActionParser implements GenerationActionParser<Generatio
       if (action.isEligibleAction()) {
         applyAction(action);
       }
-
     }
 
     replayResultsData.setAllActions(allActions);
@@ -283,7 +282,7 @@ public class Generation3ActionParser implements GenerationActionParser<Generatio
       return;
     }
 
-    if(currentAction.contains("|faint|")) {
+    if (currentAction.contains("|faint|")) {
       Pair<Trainer, Pokemon> trainerAndPokemon = retrieveTrainerAndResolvedPokemon(value);
       Trainer trainer = trainerAndPokemon.key();
       Pokemon pokemon = trainerAndPokemon.value();
@@ -295,7 +294,6 @@ public class Generation3ActionParser implements GenerationActionParser<Generatio
     if (currentAction.contains("|win|")) {
       replayResultsData.setHasWinner(true);
     }
-
   }
 
   /**

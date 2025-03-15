@@ -1,12 +1,10 @@
 package pba.service.replay;
 
+import java.util.List;
 import pba.models.replay.results.ReplayResult;
 import reactor.core.publisher.Mono;
 
-import java.util.List;
-
 public interface ReplayService<R extends ReplayResult> {
 
-    Mono<R> process(List<String> replayIds);
-
+  Mono<R> process(List<String> replayIds);
 }

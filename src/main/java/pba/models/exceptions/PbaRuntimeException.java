@@ -1,5 +1,8 @@
 package pba.models.exceptions;
 
+import lombok.Generated;
+
+@Generated
 public class PbaRuntimeException extends RuntimeException {
 
   public String message;

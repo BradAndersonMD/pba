@@ -1,7 +1,6 @@
 package pba.parser.generation;
 
 import java.util.List;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import pba.models.replay.Replay;
@@ -33,6 +32,6 @@ public class Generation3Parser extends ReplayParser<Generation3Results> {
                 })
             .toList();
 
-      return generation3ResultsAnalyzer.analyze(replayData);
+    return generation3ResultsAnalyzer.analyze(replayData);
   }
 }

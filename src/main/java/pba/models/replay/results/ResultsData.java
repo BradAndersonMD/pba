@@ -2,12 +2,11 @@ package pba.models.replay.results;
 
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvBindByPosition;
+import java.text.DecimalFormat;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import pba.models.pokemon.Pokemon;
 import pba.utils.PokemonDataUtils;
-
-import java.text.DecimalFormat;
 
 @Getter
 @NoArgsConstructor
@@ -68,9 +67,12 @@ public class ResultsData {
 
   public ResultsData calculatePerGameStats() {
     DecimalFormat df = PokemonDataUtils.getDecimalFormatter();
-    this.knockOutsPerGame = Double.parseDouble(df.format((double) totalKnockOuts / totalGamesPlayed));
-    this.damageDealtPerGame = Double.parseDouble(df.format((double) totalDamageDealt / totalGamesPlayed));
-    this.damageTakenPerGame = Double.parseDouble(df.format((double) totalDamageTaken / totalGamesPlayed));
+    this.knockOutsPerGame =
+        Double.parseDouble(df.format((double) totalKnockOuts / totalGamesPlayed));
+    this.damageDealtPerGame =
+        Double.parseDouble(df.format((double) totalDamageDealt / totalGamesPlayed));
+    this.damageTakenPerGame =
+        Double.parseDouble(df.format((double) totalDamageTaken / totalGamesPlayed));
     return this;
   }
 }

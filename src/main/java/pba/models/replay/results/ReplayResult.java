@@ -1,8 +1,6 @@
 package pba.models.replay.results;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Generated;
 
-@Getter
-@Setter
+@Generated
 public class ReplayResult {}

@@ -1,15 +1,14 @@
 package pba.service.analyzer;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import pba.models.pokemon.Pokemon;
-import pba.models.replay.results.ResultsData;
 import pba.models.replay.data.Generation3ReplayData;
 import pba.models.replay.results.Generation3Results;
+import pba.models.replay.results.ResultsData;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -17,6 +16,7 @@ public class Generation3ResultsAnalyzer
     implements ResultsAnalyzer<Generation3ReplayData, Generation3Results> {
 
   private final Map<String, ResultsData> trainAndPokemonToData = new HashMap<>();
+
   @Override
   public Generation3Results analyze(List<Generation3ReplayData> replayResults) {
     log.info("Analyzing [{}] replay results", replayResults.size());
@@ -27,7 +27,8 @@ public class Generation3ResultsAnalyzer
     }
 
     // Calculate final per game stats
-    List<ResultsData> resultsData = trainAndPokemonToData.values().stream().map(ResultsData::calculatePerGameStats).toList();
+    List<ResultsData> resultsData =
+        trainAndPokemonToData.values().stream().map(ResultsData::calculatePerGameStats).toList();
     return new Generation3Results(resultsData);
   }
 

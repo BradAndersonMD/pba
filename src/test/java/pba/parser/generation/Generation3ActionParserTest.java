@@ -9,13 +9,12 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
-
 import org.junit.jupiter.api.Test;
 import pba.models.Pair;
-import pba.models.pokemon.Pokemon;
-import pba.models.parser.generation.three.StatusEffect;
-import pba.models.pokemon.Trainer;
 import pba.models.parser.generation.three.Generation3Action;
+import pba.models.parser.generation.three.StatusEffect;
+import pba.models.pokemon.Pokemon;
+import pba.models.pokemon.Trainer;
 import pba.models.replay.data.Generation3ReplayData;
 
 class Generation3ActionParserTest {
@@ -27,7 +26,8 @@ class Generation3ActionParserTest {
     List<String> lines = readInputCreateApplyActions("playerLog.log");
 
     // Test
-    Generation3ReplayData generation3ReplayData = generation3ActionParser.parseLines(lines.toArray(new String[0]));
+    Generation3ReplayData generation3ReplayData =
+        generation3ActionParser.parseLines(lines.toArray(new String[0]));
 
     // Verify
     LinkedList<Generation3Action> allActions = generation3ReplayData.getAllActions();
@@ -47,7 +47,8 @@ class Generation3ActionParserTest {
     List<String> lines = readInputCreateApplyActions("switchLog.log");
 
     // Test
-    Generation3ReplayData generation3ReplayData = generation3ActionParser.parseLines(lines.toArray(new String[0]));
+    Generation3ReplayData generation3ReplayData =
+        generation3ActionParser.parseLines(lines.toArray(new String[0]));
 
     // Verify
     LinkedList<Generation3Action> allActions = generation3ReplayData.getAllActions();
@@ -86,7 +87,8 @@ class Generation3ActionParserTest {
     List<String> lines = readInputCreateApplyActions("damageLog.log");
 
     // Test
-    Generation3ReplayData generation3ReplayData = generation3ActionParser.parseLines(lines.toArray(new String[0]));
+    Generation3ReplayData generation3ReplayData =
+        generation3ActionParser.parseLines(lines.toArray(new String[0]));
 
     LinkedList<Generation3Action> allActions = generation3ReplayData.getAllActions();
     Trainer trainerOne = generation3ReplayData.getTrainerOne();
@@ -128,7 +130,8 @@ class Generation3ActionParserTest {
     List<String> lines = readInputCreateApplyActions("healLog.log");
 
     // Test
-    Generation3ReplayData generation3ReplayData = generation3ActionParser.parseLines(lines.toArray(new String[0]));
+    Generation3ReplayData generation3ReplayData =
+        generation3ActionParser.parseLines(lines.toArray(new String[0]));
 
     LinkedList<Generation3Action> allActions = generation3ReplayData.getAllActions();
     Trainer trainerOne = generation3ReplayData.getTrainerOne();
@@ -169,7 +172,8 @@ class Generation3ActionParserTest {
     List<String> lines = readInputCreateApplyActions("weatherLog.log");
 
     // Test
-    Generation3ReplayData generation3ReplayData = generation3ActionParser.parseLines(lines.toArray(new String[0]));
+    Generation3ReplayData generation3ReplayData =
+        generation3ActionParser.parseLines(lines.toArray(new String[0]));
 
     // Verify
     LinkedList<Generation3Action> allActions = generation3ReplayData.getAllActions();
@@ -213,8 +217,8 @@ class Generation3ActionParserTest {
     List<String> lines = readInputCreateApplyActions("statusEffectLog.log");
 
     // Test
-    Generation3ReplayData generation3ReplayData = generation3ActionParser.parseLines(lines.toArray(new String[0]));
-
+    Generation3ReplayData generation3ReplayData =
+        generation3ActionParser.parseLines(lines.toArray(new String[0]));
 
     LinkedList<Generation3Action> allActions = generation3ReplayData.getAllActions();
     Trainer trainerOne = generation3ReplayData.getTrainerOne();
@@ -251,16 +255,16 @@ class Generation3ActionParserTest {
   }
 
   private List<String> readInputCreateApplyActions(String fileName) throws IOException {
-    URL resource = Generation3ActionParserTest.class.getClassLoader().getResource("parser/input/" + fileName);
+    URL resource =
+        Generation3ActionParserTest.class.getClassLoader().getResource("parser/input/" + fileName);
     File file = new File(resource.getFile());
 
     List<String> list;
     try (FileReader fileReader = new FileReader(file);
-         BufferedReader bufferedReader = new BufferedReader(fileReader)) {
+        BufferedReader bufferedReader = new BufferedReader(fileReader)) {
       list = bufferedReader.lines().toList();
     }
 
     return list;
   }
-
 }

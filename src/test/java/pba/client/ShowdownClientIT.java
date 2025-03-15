@@ -30,9 +30,7 @@ class ShowdownClientIT {
 
   private Replay buildExpected() throws IOException {
     URL expected =
-        ShowdownClientIT.class
-            .getClassLoader()
-            .getResource("replays/gen-3-ou/replayInput.json");
+        ShowdownClientIT.class.getClassLoader().getResource("replays/gen-3-ou/replayInput.json");
     return mapper.readValue(expected, Replay.class);
   }
 }
