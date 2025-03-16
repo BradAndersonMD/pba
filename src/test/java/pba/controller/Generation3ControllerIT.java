@@ -1,12 +1,5 @@
 package pba.controller;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import java.util.ArrayList;
-import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +16,14 @@ import pba.service.replay.Generation3ReplayService;
 import pba.service.writer.CsvWriter;
 import reactor.core.publisher.Mono;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 @ExtendWith(SpringExtension.class)
 @WebFluxTest(Generation3Controller.class)
 @AutoConfigureWebTestClient
@@ -36,7 +37,7 @@ class Generation3ControllerIT {
 
   @Test
   void itShouldAnalyzedResults() {
-    List<String> replayUrls = new ArrayList<>();
+    Set<String> replayUrls = new HashSet<>();
     replayUrls.add("http://some-showdown-url.com/battle-1");
     replayUrls.add("http://some-showdown-url.com/battle-2");
     replayUrls.add("http://some-showdown-url.com/battle-3");
@@ -57,7 +58,7 @@ class Generation3ControllerIT {
 
   @Test
   void itShouldAnalyzeAndDownloadResults() {
-    List<String> replayUrls = new ArrayList<>();
+    Set<String> replayUrls = new HashSet<>();
     replayUrls.add("http://some-showdown-url.com/battle-1");
     replayUrls.add("http://some-showdown-url.com/battle-2");
     replayUrls.add("http://some-showdown-url.com/battle-3");

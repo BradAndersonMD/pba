@@ -7,6 +7,9 @@ import org.springframework.web.reactive.function.client.WebClient;
 import pba.models.replay.Replay;
 import reactor.core.publisher.Mono;
 
+/**
+ * Pokémon showdown client. Retrieves the JSON for a particular match
+ */
 @Slf4j
 @Component
 public class ShowdownClient {
@@ -20,6 +23,11 @@ public class ShowdownClient {
     webClient = WebClient.builder().baseUrl(URL).build();
   }
 
+  /**
+   * Retrieves the JSON format of a particular replayUrl
+   * @param replayUrl the to fetch the JSON for
+   * @return a {@link Replay}
+   */
   public Mono<Replay> getReplay(String replayUrl) {
     log.info("Fetching replay [{}]", replayUrl);
     String replayId = convertUrl(replayUrl);
@@ -31,6 +39,11 @@ public class ShowdownClient {
         .doOnError(e -> log.error("Failed to create replay [{}]", replayUrl));
   }
 
+  /**
+   * Strips the url for the match ID
+   * @param url the replay url to strip
+   * @return the match ID for a given {@link Replay}
+   */
   private String convertUrl(String url) {
     String replayId = url.substring(url.lastIndexOf("/") + 1);
     if (replayId.contains("battle-")) {

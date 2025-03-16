@@ -1,6 +1,5 @@
 package pba.parser.generation;
 
-import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import pba.models.replay.Replay;
@@ -8,6 +7,8 @@ import pba.models.replay.data.Generation3ReplayData;
 import pba.models.replay.results.Generation3Results;
 import pba.parser.ReplayParser;
 import pba.service.analyzer.Generation3ResultsAnalyzer;
+
+import java.util.List;
 
 @Slf4j
 @Component

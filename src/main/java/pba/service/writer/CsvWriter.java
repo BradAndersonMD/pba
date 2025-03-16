@@ -2,11 +2,6 @@ package pba.service.writer;
 
 import com.opencsv.bean.StatefulBeanToCsv;
 import com.opencsv.bean.StatefulBeanToCsvBuilder;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ZeroCopyHttpOutputMessage;
@@ -16,6 +11,12 @@ import pba.models.exceptions.PbaRuntimeException;
 import pba.models.replay.results.Generation3Results;
 import pba.models.replay.results.ResultsData;
 import reactor.core.publisher.Mono;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.List;
 
 @Slf4j
 @Component

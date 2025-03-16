@@ -6,7 +6,5 @@ import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 
 @Data
 @ConfigurationPropertiesScan
-@ConfigurationProperties(prefix = "pba.results")
-public class PbaProperties {
-  private String outputDirectory;
-}
+@ConfigurationProperties(prefix = "pba")
+public class PbaProperties { }

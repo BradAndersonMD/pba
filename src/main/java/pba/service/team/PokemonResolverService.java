@@ -1,29 +1,30 @@
 package pba.service.team;
 
-import java.util.List;
-import java.util.Map;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import pba.models.pokemon.Pokemon;
 import pba.models.pokemon.Trainer;
 
-@AllArgsConstructor
+import java.util.List;
+import java.util.Map;
+
+@RequiredArgsConstructor
 public class PokemonResolverService {
 
   private final Map<String, List<Pokemon>> playerToPokemon;
 
   /**
-   * Lookup a {@link Pokemon} by name and a particular {@link Trainer}
+   * Lookup a {@link Pokemon} by pokemonName and a particular {@link Trainer}
    *
-   * @param trainer the player to lookup
-   * @param name the name to lookup for the player
+   * @param trainer the trainer to lookup
+   * @param pokemonName the name for a Pokémon to lookup for the trainer
    * @return the found {@link Pokemon} or null if no Pokémon is present
    */
-  public Pokemon resolve(Trainer trainer, String name) {
+  public Pokemon resolve(Trainer trainer, String pokemonName) {
     return playerToPokemon.get(trainer.getShortHandName()).stream()
         .filter(
             pokemon ->
-                pokemon.getName().equalsIgnoreCase(name)
-                    || pokemon.getNickname().equalsIgnoreCase(name))
+                    pokemonName.equalsIgnoreCase(pokemon.getName())
+                    || pokemonName.equalsIgnoreCase(pokemon.getNickname()))
         .findFirst()
         .orElse(null);
   }

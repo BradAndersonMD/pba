@@ -1,14 +1,15 @@
 package pba.service.analyzer;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import pba.models.pokemon.Pokemon;
 import pba.models.replay.data.Generation3ReplayData;
 import pba.models.replay.results.Generation3Results;
 import pba.models.replay.results.ResultsData;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @RequiredArgsConstructor

@@ -1,9 +1,10 @@
 package pba.models.pokemon;
 
+import lombok.Getter;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import lombok.Getter;
 
 @Getter
 public class Trainer {

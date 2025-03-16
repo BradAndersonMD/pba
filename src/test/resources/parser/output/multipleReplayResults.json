@@ -10,7 +10,8 @@
       "totalDamageTaken": 126,
       "knockOutsPerGame": 0.0,
       "damageDealtPerGame": 86.0,
-      "damageTakenPerGame": 126.0
+      "damageTakenPerGame": 126.0,
+      "damageTakenPerDeath": 126.0
     },
     {
       "trainer": "PBAPoliwraths",
@@ -22,7 +23,8 @@
       "totalDamageTaken": 118,
       "knockOutsPerGame": 0.0,
       "damageDealtPerGame": 0.0,
-      "damageTakenPerGame": 118.0
+      "damageTakenPerGame": 118.0,
+      "damageTakenPerDeath": 118.0
     },
     {
       "trainer": "PBAPoliwraths",
@@ -34,7 +36,8 @@
       "totalDamageTaken": 118,
       "knockOutsPerGame": 1.0,
       "damageDealtPerGame": 100.0,
-      "damageTakenPerGame": 118.0
+      "damageTakenPerGame": 118.0,
+      "damageTakenPerDeath": 118.0
     },
     {
       "trainer": "PlatyPunkBean",
@@ -46,7 +49,8 @@
       "totalDamageTaken": 133,
       "knockOutsPerGame": 2.0,
       "damageDealtPerGame": 178.5,
-      "damageTakenPerGame": 66.5
+      "damageTakenPerGame": 66.5,
+      "damageTakenPerDeath": 133.0
     },
     {
       "trainer": "PlatyPunkBean",
@@ -58,7 +62,8 @@
       "totalDamageTaken": 125,
       "knockOutsPerGame": 1.0,
       "damageDealtPerGame": 100.0,
-      "damageTakenPerGame": 125.0
+      "damageTakenPerGame": 125.0,
+      "damageTakenPerDeath": 125.0
     },
     {
       "trainer": "PlatyPunkBean",
@@ -70,7 +75,8 @@
       "totalDamageTaken": 184,
       "knockOutsPerGame": 0.0,
       "damageDealtPerGame": 15.66,
-      "damageTakenPerGame": 61.33
+      "damageTakenPerGame": 61.33,
+      "damageTakenPerDeath": 184.0
     },
     {
       "trainer": "PlatyPunkBean",
@@ -82,7 +88,8 @@
       "totalDamageTaken": 82,
       "knockOutsPerGame": 0.5,
       "damageDealtPerGame": 94.0,
-      "damageTakenPerGame": 41.0
+      "damageTakenPerGame": 41.0,
+      "damageTakenPerDeath": 82.0
     },
     {
       "trainer": "PlatyPunkBean",
@@ -94,7 +101,8 @@
       "totalDamageTaken": 49,
       "knockOutsPerGame": 1.0,
       "damageDealtPerGame": 96.0,
-      "damageTakenPerGame": 24.5
+      "damageTakenPerGame": 24.5,
+      "damageTakenPerDeath": 24.5
     },
     {
       "trainer": "PBAPoliwraths",
@@ -106,7 +114,8 @@
       "totalDamageTaken": 480,
       "knockOutsPerGame": 0.25,
       "damageDealtPerGame": 98.75,
-      "damageTakenPerGame": 120.0
+      "damageTakenPerGame": 120.0,
+      "damageTakenPerDeath": 120.0
     },
     {
       "trainer": "PBAPoliwraths",
@@ -118,7 +127,8 @@
       "totalDamageTaken": 106,
       "knockOutsPerGame": 0.0,
       "damageDealtPerGame": 58.0,
-      "damageTakenPerGame": 106.0
+      "damageTakenPerGame": 106.0,
+      "damageTakenPerDeath": 106.0
     },
     {
       "trainer": "PlatyPunkBean",
@@ -130,7 +140,8 @@
       "totalDamageTaken": 219,
       "knockOutsPerGame": 1.0,
       "damageDealtPerGame": 100.0,
-      "damageTakenPerGame": 109.5
+      "damageTakenPerGame": 109.5,
+      "damageTakenPerDeath": 109.5
     },
     {
       "trainer": "PBAPoliwraths",
@@ -142,7 +153,8 @@
       "totalDamageTaken": 564,
       "knockOutsPerGame": 0.0,
       "damageDealtPerGame": 49.25,
-      "damageTakenPerGame": 141.0
+      "damageTakenPerGame": 141.0,
+      "damageTakenPerDeath": 188.0
     },
     {
       "trainer": "PBAPoliwraths",
@@ -154,7 +166,8 @@
       "totalDamageTaken": 336,
       "knockOutsPerGame": 0.66,
       "damageDealtPerGame": 56.0,
-      "damageTakenPerGame": 112.0
+      "damageTakenPerGame": 112.0,
+      "damageTakenPerDeath": 112.0
     },
     {
       "trainer": "PlatyPunkBean",
@@ -166,7 +179,8 @@
       "totalDamageTaken": 110,
       "knockOutsPerGame": 1.0,
       "damageDealtPerGame": 191.0,
-      "damageTakenPerGame": 110.0
+      "damageTakenPerGame": 110.0,
+      "damageTakenPerDeath": 110.0
     },
     {
       "trainer": "PlatyPunkBean",
@@ -178,7 +192,8 @@
       "totalDamageTaken": 145,
       "knockOutsPerGame": 1.0,
       "damageDealtPerGame": 115.0,
-      "damageTakenPerGame": 145.0
+      "damageTakenPerGame": 145.0,
+      "damageTakenPerDeath": 145.0
     },
     {
       "trainer": "PlatyPunkBean",
@@ -190,7 +205,8 @@
       "totalDamageTaken": 97,
       "knockOutsPerGame": 1.0,
       "damageDealtPerGame": 191.0,
-      "damageTakenPerGame": 97.0
+      "damageTakenPerGame": 97.0,
+      "damageTakenPerDeath": 97.0
     },
     {
       "trainer": "PBAPoliwraths",
@@ -202,7 +218,8 @@
       "totalDamageTaken": 516,
       "knockOutsPerGame": 1.0,
       "damageDealtPerGame": 142.33,
-      "damageTakenPerGame": 172.0
+      "damageTakenPerGame": 172.0,
+      "damageTakenPerDeath": 258.0
     },
     {
       "trainer": "PlatyPunkBean",
@@ -214,7 +231,8 @@
       "totalDamageTaken": 194,
       "knockOutsPerGame": 2.0,
       "damageDealtPerGame": 262.0,
-      "damageTakenPerGame": 194.0
+      "damageTakenPerGame": 194.0,
+      "damageTakenPerDeath": 194.0
     },
     {
       "trainer": "PBAPoliwraths",
@@ -226,7 +244,8 @@
       "totalDamageTaken": 216,
       "knockOutsPerGame": 0.66,
       "damageDealtPerGame": 91.33,
-      "damageTakenPerGame": 72.0
+      "damageTakenPerGame": 72.0,
+      "damageTakenPerDeath": 108.0
     },
     {
       "trainer": "PlatyPunkBean",
@@ -238,7 +257,8 @@
       "totalDamageTaken": 59,
       "knockOutsPerGame": 0.0,
       "damageDealtPerGame": 80.0,
-      "damageTakenPerGame": 59.0
+      "damageTakenPerGame": 59.0,
+      "damageTakenPerDeath": 59.0
     },
     {
       "trainer": "PlatyPunkBean",
@@ -250,7 +270,8 @@
       "totalDamageTaken": 361,
       "knockOutsPerGame": 0.66,
       "damageDealtPerGame": 88.66,
-      "damageTakenPerGame": 120.33
+      "damageTakenPerGame": 120.33,
+      "damageTakenPerDeath": 120.33
     },
     {
       "trainer": "PlatyPunkBean",
@@ -262,7 +283,8 @@
       "totalDamageTaken": 118,
       "knockOutsPerGame": 0.0,
       "damageDealtPerGame": 88.0,
-      "damageTakenPerGame": 118.0
+      "damageTakenPerGame": 118.0,
+      "damageTakenPerDeath": 118.0
     },
     {
       "trainer": "PBAPoliwraths",
@@ -274,7 +296,8 @@
       "totalDamageTaken": 325,
       "knockOutsPerGame": 0.5,
       "damageDealtPerGame": 157.5,
-      "damageTakenPerGame": 81.25
+      "damageTakenPerGame": 81.25,
+      "damageTakenPerDeath": 108.33
     },
     {
       "trainer": "PlatyPunkBean",
@@ -286,7 +309,8 @@
       "totalDamageTaken": 106,
       "knockOutsPerGame": 1.5,
       "damageDealtPerGame": 137.5,
-      "damageTakenPerGame": 53.0
+      "damageTakenPerGame": 53.0,
+      "damageTakenPerDeath": 106.0
     }
   ]
 }

@@ -1,9 +1,13 @@
 package pba.utils;
 
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
 import lombok.experimental.UtilityClass;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+
+/**
+ * Utility class for writing "pretty"/rounded {@link Double}'s
+ */
 @UtilityClass
 public class PokemonDataUtils {
 

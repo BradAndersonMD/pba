@@ -6,6 +6,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
+import java.util.Set;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -33,7 +35,7 @@ class Generation3ReplayServiceTest {
     // Setup
     Replay expectedReplay = buildExpectedReplay();
     Generation3Results expected = buildExpectedResults();
-    List<String> replayUrls = List.of("https://replay.pokemonshowdown.com/gen3ou-2311036422");
+    Set<String> replayUrls = Set.of("https://replay.pokemonshowdown.com/gen3ou-2311036422");
 
     when(showdownClient.getReplay("https://replay.pokemonshowdown.com/gen3ou-2311036422"))
         .thenReturn(Mono.just(expectedReplay));

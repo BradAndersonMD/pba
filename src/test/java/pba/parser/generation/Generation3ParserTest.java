@@ -21,7 +21,6 @@ class Generation3ParserTest {
     Generation3Results expected = loadExpected("results.json");
     Generation3Parser generation3Parser = new Generation3Parser();
     Generation3Results actual = generation3Parser.parseReplays(List.of(replay));
-    String s = mapper.writer().writeValueAsString(actual);
     assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
   }
 
@@ -31,7 +30,6 @@ class Generation3ParserTest {
     Generation3Results expected = loadExpected("multipleReplayResults.json");
     Generation3Parser generation3Parser = new Generation3Parser();
     Generation3Results actual = generation3Parser.parseReplays(replays);
-    String s = mapper.writer().writeValueAsString(actual);
     assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
   }
 

@@ -2,11 +2,12 @@ package pba.models.replay.results;
 
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvBindByPosition;
-import java.text.DecimalFormat;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import pba.models.pokemon.Pokemon;
 import pba.utils.PokemonDataUtils;
+
+import java.text.DecimalFormat;
 
 @Getter
 @NoArgsConstructor
@@ -52,6 +53,11 @@ public class ResultsData {
   @CsvBindByName(column = "Dmg taken per game", required = true)
   private double damageTakenPerGame = 0.0;
 
+  @CsvBindByPosition(position = 10)
+  @CsvBindByName(column = "Dmg taken per death", required = true)
+  private double damageTakenPerDeath = 0.0;
+
+
   public ResultsData(Pokemon pokemon) {
     this.trainer = pokemon.getTrainer().getName();
     this.pokemon = pokemon.getName();
@@ -73,6 +79,13 @@ public class ResultsData {
         Double.parseDouble(df.format((double) totalDamageDealt / totalGamesPlayed));
     this.damageTakenPerGame =
         Double.parseDouble(df.format((double) totalDamageTaken / totalGamesPlayed));
+    if(totalDeaths > 0){
+      this.damageTakenPerDeath =
+              Double.parseDouble(df.format((double) totalDamageTaken / totalDeaths));
+    }
+    else {
+      this.damageTakenPerDeath = totalDamageTaken;
+    }
     return this;
   }
 }

@@ -1,12 +1,5 @@
 package pba.parser.generation;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.Map;
-import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import pba.models.Pair;
 import pba.models.parser.generation.three.Generation3Action;
@@ -16,9 +9,22 @@ import pba.models.parser.generation.three.StatusEffect;
 import pba.models.parser.generation.three.Weather;
 import pba.models.pokemon.Pokemon;
 import pba.models.pokemon.Trainer;
+import pba.models.replay.Replay;
 import pba.models.replay.data.Generation3ReplayData;
 import pba.service.team.PokemonResolverService;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.Map;
+import java.util.Optional;
+
+/**
+ * The Generation3ActionParser parsers through the log file for a given {@link Replay}
+ * This parser will accumulate data regarding the {@link Pokemon} used for a given {@link Replay}
+ */
 @Slf4j
 public class Generation3ActionParser implements GenerationActionParser<Generation3ReplayData> {
 
@@ -27,7 +33,6 @@ public class Generation3ActionParser implements GenerationActionParser<Generatio
   private final Generation3GameState gameState;
   // Tracks all actions so far - useful for back tracking
   private final LinkedList<Generation3Action> allActions = new LinkedList<>();
-  private final Generation3ReplayData replayResultsData = new Generation3ReplayData();
 
   public Generation3ActionParser() {
     this.trainerToPokemon = new HashMap<>();
@@ -35,8 +40,14 @@ public class Generation3ActionParser implements GenerationActionParser<Generatio
     this.pokemonResolverService = new PokemonResolverService(trainerToPokemon);
   }
 
+  /**
+   * Parses the lines for a given log of a {@link Replay}
+   * @param lines the lines to parse data for
+   * @return the {@link Generation3ReplayData} for a {@link Replay}'s log file
+   */
   @Override
   public Generation3ReplayData parseLines(String[] lines) {
+    Generation3ReplayData replayResultsData = new Generation3ReplayData();
 
     for (String line : lines) {
       if (replayResultsData.isHasWinner()) {
@@ -45,7 +56,7 @@ public class Generation3ActionParser implements GenerationActionParser<Generatio
       Generation3Action action = new Generation3Action(line);
       log.debug("ActionType=[{}], Value=[{}]", action.getActionType(), action.getValue());
       if (action.isEligibleAction()) {
-        applyAction(action);
+        applyAction(replayResultsData, action);
       }
     }
 
@@ -60,7 +71,7 @@ public class Generation3ActionParser implements GenerationActionParser<Generatio
    *
    * @param action the action to apply
    */
-  private void applyAction(Generation3Action action) {
+  private void applyAction(Generation3ReplayData replayResultsData, Generation3Action action) {
     allActions.add(action);
 
     String currentAction = action.getActionType();
@@ -71,7 +82,7 @@ public class Generation3ActionParser implements GenerationActionParser<Generatio
     if (currentAction.contains("|player|")) {
       String shortHandName = valueSplit[0]; // p1
       String trainerName = valueSplit[1]; //  SomeTrainerNickname
-      addTrainerToGameState(new Trainer(trainerName, shortHandName));
+      addTrainerToGameState(replayResultsData, new Trainer(trainerName, shortHandName));
       return;
     }
 
@@ -81,7 +92,7 @@ public class Generation3ActionParser implements GenerationActionParser<Generatio
     // example = p1a: NickName|PokemonName + Gender(?)|100/100
     if (currentAction.contains("|switch|") || currentAction.contains("|drag|")) {
       // Split into resolved Trainer and Pokémon - "p1a: NickName"
-      Pair<Trainer, String> trainerAndPokemonNickName = retrieveTrainerAndPokemonNickName(value);
+      Pair<Trainer, String> trainerAndPokemonNickName = retrieveTrainerAndPokemonNickName(replayResultsData, value);
       Trainer trainer = trainerAndPokemonNickName.key(); // Trainer
       String pokemonNickName = trainerAndPokemonNickName.value(); // Pokemon nickname
 
@@ -107,7 +118,7 @@ public class Generation3ActionParser implements GenerationActionParser<Generatio
     }
 
     if (currentAction.contains("|-damage|")) {
-      Pair<Trainer, Pokemon> trainerAndPokemon = retrieveTrainerAndResolvedPokemon(value);
+      Pair<Trainer, Pokemon> trainerAndPokemon = retrieveTrainerAndResolvedPokemon(replayResultsData, value);
       Trainer trainer = trainerAndPokemon.key();
       Pokemon pokemon = trainerAndPokemon.value();
 
@@ -117,7 +128,7 @@ public class Generation3ActionParser implements GenerationActionParser<Generatio
         String previousValue = previousMoveAction.getValue().split("\\|")[0];
 
         Pair<Trainer, Pokemon> previousTrainerAndPokemon =
-            retrieveTrainerAndResolvedPokemon(previousValue);
+            retrieveTrainerAndResolvedPokemon(replayResultsData, previousValue);
         Trainer previousTrainer = previousTrainerAndPokemon.key();
         Pokemon previousPokemon = previousTrainerAndPokemon.value();
 
@@ -139,7 +150,7 @@ public class Generation3ActionParser implements GenerationActionParser<Generatio
         String previousValue = previousMoveAction.getValue().split("\\|")[0];
 
         Pair<Trainer, Pokemon> previousTrainerAndPokemon =
-            retrieveTrainerAndResolvedPokemon(previousValue);
+            retrieveTrainerAndResolvedPokemon(replayResultsData, previousValue);
         Trainer previousTrainer = previousTrainerAndPokemon.key();
         Pokemon previousPokemon = previousTrainerAndPokemon.value();
 
@@ -156,7 +167,7 @@ public class Generation3ActionParser implements GenerationActionParser<Generatio
         String enemyPokemonValue = valueSplit[3];
 
         Pair<Trainer, Pokemon> previousTrainerAndPokemon =
-            retrieveTrainerAndResolvedPokemon(enemyPokemonValue);
+            retrieveTrainerAndResolvedPokemon(replayResultsData, enemyPokemonValue);
         Trainer enemyTrainer = previousTrainerAndPokemon.key();
         Pokemon enemyPokemon = previousTrainerAndPokemon.value();
 
@@ -219,7 +230,7 @@ public class Generation3ActionParser implements GenerationActionParser<Generatio
       Hazard hazard = Hazard.get(valueSplit[1]);
       if (hazard != null) {
         Pair<Trainer, Pokemon> hazardTrainerAndPokemon =
-            retrieveTrainerAndResolvedPokemon(valueSplit[0]);
+            retrieveTrainerAndResolvedPokemon(replayResultsData, valueSplit[0]);
 
         Trainer hazardTrainer = hazardTrainerAndPokemon.key();
         Pokemon hazardPokemon = hazardTrainerAndPokemon.value();
@@ -239,7 +250,7 @@ public class Generation3ActionParser implements GenerationActionParser<Generatio
 
     if (currentAction.contains("|-weather") && value.contains("[of]")) {
       Pair<Trainer, Pokemon> hazardTrainerAndPokemon =
-          retrieveTrainerAndResolvedPokemon(valueSplit[2].substring(5));
+          retrieveTrainerAndResolvedPokemon(replayResultsData, valueSplit[2].substring(5));
       Trainer hazardTrainer = hazardTrainerAndPokemon.key();
       Pokemon hazardPokemon = hazardTrainerAndPokemon.value();
 
@@ -253,7 +264,7 @@ public class Generation3ActionParser implements GenerationActionParser<Generatio
     }
 
     if (currentAction.contains("|-status|")) {
-      Pair<Trainer, Pokemon> trainerAndPokemon = retrieveTrainerAndResolvedPokemon(value);
+      Pair<Trainer, Pokemon> trainerAndPokemon = retrieveTrainerAndResolvedPokemon(replayResultsData, value);
       Trainer trainer = trainerAndPokemon.key();
       Pokemon pokemon = trainerAndPokemon.value();
 
@@ -261,7 +272,7 @@ public class Generation3ActionParser implements GenerationActionParser<Generatio
       String previousValue = previousMoveAction.getValue().split("\\|")[0];
 
       Pair<Trainer, Pokemon> previousTrainerAndPokemon =
-          retrieveTrainerAndResolvedPokemon(previousValue);
+          retrieveTrainerAndResolvedPokemon(replayResultsData, previousValue);
       Pokemon previousPokemon = previousTrainerAndPokemon.value();
 
       pokemon.setStatusEffectAndPokemon(
@@ -271,7 +282,7 @@ public class Generation3ActionParser implements GenerationActionParser<Generatio
     }
 
     if (currentAction.contains("|-heal|")) {
-      Pair<Trainer, Pokemon> trainerAndPokemon = retrieveTrainerAndResolvedPokemon(value);
+      Pair<Trainer, Pokemon> trainerAndPokemon = retrieveTrainerAndResolvedPokemon(replayResultsData, value);
       Trainer trainer = trainerAndPokemon.key();
       Pokemon pokemon = trainerAndPokemon.value();
 
@@ -283,7 +294,7 @@ public class Generation3ActionParser implements GenerationActionParser<Generatio
     }
 
     if (currentAction.contains("|faint|")) {
-      Pair<Trainer, Pokemon> trainerAndPokemon = retrieveTrainerAndResolvedPokemon(value);
+      Pair<Trainer, Pokemon> trainerAndPokemon = retrieveTrainerAndResolvedPokemon(replayResultsData, value);
       Trainer trainer = trainerAndPokemon.key();
       Pokemon pokemon = trainerAndPokemon.value();
 
@@ -301,7 +312,7 @@ public class Generation3ActionParser implements GenerationActionParser<Generatio
    *
    * @param trainer the trainer to add
    */
-  private void addTrainerToGameState(Trainer trainer) {
+  private void addTrainerToGameState(Generation3ReplayData replayResultsData, Trainer trainer) {
     if (replayResultsData.getTrainerOne() == null) {
       replayResultsData.setTrainerOne(trainer);
     } else {
@@ -316,10 +327,10 @@ public class Generation3ActionParser implements GenerationActionParser<Generatio
    * @param value the value to split and parse
    * @return a {@link Pair} of {@link Trainer} and {@link Pokemon}
    */
-  private Pair<Trainer, String> retrieveTrainerAndPokemonNickName(String value) {
+  private Pair<Trainer, String> retrieveTrainerAndPokemonNickName(Generation3ReplayData replayResultsData, String value) {
     // Split shorthand name and Pokémon nickname
     String[] splitValue = value.split("\\|")[0].split(":"); // ["p1a", "NickName"]
-    Trainer trainer = retrieveTrainerForShorthand(splitValue[0].substring(0, 2).trim());
+    Trainer trainer = retrieveTrainerForShorthand(replayResultsData, splitValue[0].substring(0, 2).trim());
     return new Pair<>(trainer, splitValue[1].trim());
   }
 
@@ -329,11 +340,11 @@ public class Generation3ActionParser implements GenerationActionParser<Generatio
    * @param value the value to split and parse
    * @return a {@link Pair} of {@link Trainer} and {@link Pokemon}
    */
-  private Pair<Trainer, Pokemon> retrieveTrainerAndResolvedPokemon(String value) {
+  private Pair<Trainer, Pokemon> retrieveTrainerAndResolvedPokemon(Generation3ReplayData replayResultsData, String value) {
     // Split shorthand name and Pokémon nickname
     String[] splitValue = value.split("\\|")[0].split(":"); // ["p1a", "NickName"]
     String playerShortHand = splitValue[0].contains("p1") ? "p1" : "p2";
-    Trainer trainer = retrieveTrainerForShorthand(playerShortHand.trim());
+    Trainer trainer = retrieveTrainerForShorthand(replayResultsData, playerShortHand.trim());
     Pokemon pokemon = pokemonResolverService.resolve(trainer, splitValue[1].trim());
     return new Pair<>(trainer, pokemon);
   }
@@ -344,7 +355,7 @@ public class Generation3ActionParser implements GenerationActionParser<Generatio
    * @param shorthand the shorthand name to resolve
    * @return the {@link Trainer} with the matching shorthand name
    */
-  private Trainer retrieveTrainerForShorthand(String shorthand) {
+  private Trainer retrieveTrainerForShorthand(Generation3ReplayData replayResultsData, String shorthand) {
     return shorthand.contains(replayResultsData.getTrainerOne().getShortHandName())
         ? replayResultsData.getTrainerOne()
         : replayResultsData.getTrainerTwo();
